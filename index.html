@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
     body {
@@ -16,6 +17,12 @@
       font-family: "VT323", monospace;
       color: #000000;
       padding-bottom: 40px;
+      overflow-x: hidden;
+      cursor: url('https://win98icons.alexmeub.com/icons/cur/normal.cur'), auto;
+    }
+
+    body.loading {
+      cursor: url('https://win98icons.alexmeub.com/icons/cur/busy.cur'), wait;
     }
 
     .ui-panel {
@@ -176,9 +183,240 @@
     .modal-content strong {
       font-weight: bold;
     }
+
+    /* New styles for advanced features */
+    .marquee {
+      white-space: nowrap;
+      overflow: hidden;
+      box-sizing: border-box;
+      background: #000080;
+      color: white;
+      padding: 4px;
+      position: fixed;
+      bottom: 40px;
+      width: 100%;
+      left: 0;
+      z-index: 20;
+    }
+    
+    .marquee p {
+      display: inline-block;
+      padding-left: 100%;
+      animation: marquee 20s linear infinite;
+      font-family: "Arial", sans-serif;
+      font-size: 14px;
+    }
+    
+    @keyframes marquee {
+      0%   { transform: translate(0, 0); }
+      100% { transform: translate(-100%, 0); }
+    }
+    
+    .desktop-icon.selected span {
+      background-color: #000080;
+    }
+    
+    .window-minimized {
+      display: none;
+    }
+    
+    .window-maximized {
+      width: 100% !important;
+      height: calc(100% - 40px) !important;
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      z-index: 25 !important;
+      margin: 0 !important;
+    }
+    
+    .window-draggable {
+      cursor: move;
+    }
+    
+    .desktop-context-menu {
+      position: absolute;
+      z-index: 100;
+    }
+    
+    .pixel-art {
+      image-rendering: pixelated;
+    }
+    
+    .typing-animation::after {
+      content: "|";
+      animation: blink 1s step-end infinite;
+    }
+    
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+    
+    .taskbar-window-button {
+      padding: 2px 8px;
+      margin: 0 2px;
+      background-color: #c0c0c0;
+      border: 1px outset #c0c0c0;
+      font-family: "Arial", sans-serif;
+      font-size: 12px;
+      max-width: 160px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    
+    .taskbar-window-button.active {
+      border-style: inset;
+      background-color: #dfdfdf;
+    }
+    
+    .rain-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+    
+    .rain-drop {
+      position: absolute;
+      width: 2px;
+      height: 20px;
+      background: linear-gradient(to bottom, transparent, #00ffff);
+      opacity: 0.6;
+      animation: rain-fall linear infinite;
+    }
+    
+    @keyframes rain-fall {
+      to {
+        transform: translateY(100vh);
+      }
+    }
+    
+    .matrix-code {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+      background: rgba(0, 0, 0, 0.9);
+      opacity: 0;
+      transition: opacity 1s;
+    }
+    
+    .code-char {
+      position: absolute;
+      color: #00ff00;
+      font-family: "Courier New", monospace;
+      animation: code-fall linear infinite;
+    }
+    
+    @keyframes code-fall {
+      to {
+        transform: translateY(100vh);
+      }
+    }
+    
+    .desktop-grid {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -2;
+      background-image: 
+        linear-gradient(to right, rgba(0, 0, 255, 0.1) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0, 0, 255, 0.1) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+    
+    .easter-egg-trigger {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      background: transparent;
+      z-index: 1000;
+    }
+    
+    .trash-bin {
+      position: fixed;
+      bottom: 50px;
+      right: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .trash-bin img {
+      width: 48px;
+      height: 48px;
+    }
+    
+    .trash-bin span {
+      color: white;
+      text-shadow: 1px 1px 2px black;
+    }
+    
+    .window-content {
+      transition: all 0.3s ease;
+    }
+    
+    .window-shake {
+      animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+    }
+    
+    @keyframes shake {
+      10%, 90% { transform: translateX(-1px); }
+      20%, 80% { transform: translateX(2px); }
+      30%, 50%, 70% { transform: translateX(-3px); }
+      40%, 60% { transform: translateX(3px); }
+    }
+    
+    .desktop-particle {
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: -1;
+    }
   </style>
 </head>
 <body class="min-h-screen w-full flex flex-col items-center justify-center p-4 text-xl">
+  <!-- Matrix Code Rain (Hidden Initially) -->
+  <div id="matrix-code" class="matrix-code"></div>
+  
+  <!-- Desktop Grid -->
+  <div class="desktop-grid"></div>
+  
+  <!-- Rain Effect (Hidden Initially) -->
+  <div id="rain-container" class="rain-container"></div>
+  
+  <!-- Desktop Particles -->
+  <div id="particle-container"></div>
+  
+  <!-- Easter Egg Triggers -->
+  <div class="easter-egg-trigger" style="top: 10px; left: 10px;"></div>
+  <div class="easter-egg-trigger" style="top: 10px; right: 10px;"></div>
+  <div class="easter-egg-trigger" style="bottom: 60px; left: 10px;"></div>
+  <div class="easter-egg-trigger" style="bottom: 60px; right: 10px;"></div>
+  
+  <!-- Trash Bin -->
+  <div class="trash-bin">
+    <img src="https://win98icons.alexmeub.com/icons/png/recycle_bin_empty-1.png" alt="Recycle Bin" id="trash-bin-icon">
+    <span>Recycle Bin</span>
+  </div>
+  
+  <!-- Marquee Text -->
+  <div class="marquee">
+    <p>Welcome to Afnan Baig's Windows 98 Portfolio! • Full Stack Developer • JavaScript Expert • Cloud Specialist • Berlin, Germany • Available for FullTime / PartTime Jobs • Hire me! • +49 157 51342553 • afnanthara11@gmail.com</p>
+  </div>
+
   <!-- Context menu -->
   <div id="context-menu" class="hidden ui-panel absolute z-50 text-base">
     <ul class="p-1" style="font-family: 'Arial', sans-serif">
@@ -187,6 +425,15 @@
       </li>
       <li id="change-bg-btn" class="px-4 py-1 hover:bg-[#000080] hover:text-white cursor-pointer">
         Next Background
+      </li>
+      <li id="rain-effect-btn" class="px-4 py-1 hover:bg-[#000080] hover:text-white cursor-pointer">
+        Toggle Rain Effect
+      </li>
+      <li id="matrix-effect-btn" class="px-4 py-1 hover:bg-[#000080] hover:text-white cursor-pointer">
+        Matrix Mode
+      </li>
+      <li id="minimize-all-btn" class="px-4 py-1 hover:bg-[#000080] hover:text-white cursor-pointer">
+        Minimize All Windows
       </li>
     </ul>
   </div>
@@ -200,25 +447,29 @@
         </div>
       </div>
       <ul class="p-1 text-base flex-grow" style="font-family: 'Arial', sans-serif">
-        <li class="flex items-center gap-2 px-4 py-1 hover:bg-[#000080] hover:text-white cursor-pointer">
-          Programs
+        <li class="flex items-center gap-2 px-4 py-1 hover:bg-[#000080] hover:text-white cursor-pointer" data-modal-target="Projects">
+          <img src="https://win98icons.alexmeub.com/icons/png/folder_closed_file-0.png" class="h-4 w-4" alt=""> Programs
+        </li>
+        <li class="flex items-center gap-2 px-4 py-1 hover:bg-[#000080] hover:text-white cursor-pointer" data-modal-target="Resume">
+          <img src="https://win98icons.alexmeub.com/icons/png/notepad_file-2.png" class="h-4 w-4" alt=""> Documents
         </li>
         <li class="flex items-center gap-2 px-4 py-1 hover:bg-[#000080] hover:text-white cursor-pointer">
-          Documents
-        </li>
-        <li class="flex items-center gap-2 px-4 py-1 hover:bg-[#000080] hover:text-white cursor-pointer">
-          Settings
-        </li>
-        <li class="border-t-2 border-gray-500 my-1"></li>
-        <li class="px-4 py-1 hover:bg-[#000080] hover:text-white cursor-pointer">
-          Start using Copilot today! (whoops, wrong timeline!)
+          <img src="https://win98icons.alexmeub.com/icons/png/msn_network-0.png" class="h-4 w-4" alt=""> Settings
         </li>
         <li class="border-t-2 border-gray-500 my-1"></li>
+        <li class="px-4 py-1 hover:bg-[#000080] hover:text-white cursor-pointer" id="find-me-online-btn">
+          <img src="https://win98icons.alexmeub.com/icons/png/explorer-4.png" class="h-4 w-4" alt=""> Find Me Online
+        </li>
+        <li class="border-t-2 border-gray-500 my-1"></li>
+        <li class="flex items-center gap-2 px-4 py-1 hover:bg-[#000080] hover:text-white cursor-pointer" id="run-btn">
+          <img src="https://win98icons.alexmeub.com/icons/png/ms_dos-0.png" class="h-4 w-4" alt=""> Run...
+        </li>
+        <li class="border-t-2 border-gray-500 my-1"></li>
         <li class="flex items-center gap-2 px-4 py-1 hover:bg-[#000080] hover:text-white cursor-pointer">
-          Log Off
+          <img src="https://win98icons.alexmeub.com/icons/png/exit-4.png" class="h-4 w-4" alt=""> Log Off
         </li>
         <li class="flex items-center gap-2 px-4 py-1 hover:bg-[#000080] hover:text-white cursor-pointer">
-          Shut Down...
+          <img src="https://win98icons.alexmeub.com/icons/png/shut_down-1.png" class="h-4 w-4" alt=""> Shut Down...
         </li>
       </ul>
     </div>
@@ -242,17 +493,45 @@
       <img src="https://win98icons.alexmeub.com/icons/png/notepad_file-2.png" alt="Resume" class="h-12 w-12 mb-1" onerror="this.style.display='none'" />
       <span>Resume</span>
     </div>
+    <div class="desktop-icon" id="games-folder">
+      <img src="https://files.softicons.com/download/folder-icons/onibari-ultimate-icons-by-stinky9/ico/Games.ico" alt="Games" class="h-12 w-12 mb-1" onerror="this.style.display='none'" />
+      <span>Games</span>
+    </div>
+  </div>
+
+  <!-- Run Dialog -->
+  <div id="run-dialog" class="hidden ui-panel absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50" style="width: 300px;">
+    <div class="title-bar">
+      <span>Run</span>
+      <div class="window-controls">
+        <div id="run-dialog-close" class="window-control">X</div>
+      </div>
+    </div>
+    <div class="p-4 bg-white" style="border: 2px inset #c0c0c0;">
+      <p class="mb-2">Type the name of a program, folder, document, or Internet resource, and Windows will open it for you.</p>
+      <div class="mb-4">
+        <label for="run-command" class="block mb-1">Open:</label>
+        <input type="text" id="run-command" class="w-full ui-panel p-1" style="border: 2px inset #c0c0c0;">
+      </div>
+      <div class="flex justify-between">
+        <button class="retro-button">OK</button>
+        <button class="retro-button" id="run-cancel-btn">Cancel</button>
+        <button class="retro-button" id="run-browse-btn">Browse...</button>
+      </div>
+    </div>
   </div>
 
   <!-- Main center window -->
   <div id="main-window" class="ui-panel w-full max-w-4xl mb-4 z-10">
-    <div class="title-bar">
+    <div class="title-bar window-draggable" id="main-window-title">
       <span>afnanbaig.exe - Microsoft Internet Explorer</span>
       <div class="window-controls">
+        <div id="minimize-button" class="window-control">_</div>
+        <div id="maximize-button" class="window-control">□</div>
         <div id="close-button" class="window-control">X</div>
       </div>
     </div>
-    <div class="p-4 sm:p-8">
+    <div class="p-4 sm:p-8 window-content">
       <div class="flex flex-col md:flex-row items-center gap-8">
         <div class="flex flex-col items-center text-center">
           <img src="https://i.gifer.com/7E4l.gif" alt="Spinning Email Icon" class="w-full h-24 mb-4" onerror="this.style.display='none'" />
@@ -303,23 +582,27 @@
     <!-- Taskbar icons -->
     <div class="flex items-center gap-2">
       <div class="flex items-center gap-2">
-        <div class="taskbar-icon" title="My Computer">
+        <div class="taskbar-icon" title="My Computer" data-modal-target="My Computer">
           <img src="https://win98icons.alexmeub.com/icons/png/computer-3.png" class="h-8 w-8" alt="My Computer Icon" onerror="this.style.display='none'" />
         </div>
-        <div class="taskbar-icon" title="Internet">
+        <div class="taskbar-icon" title="Internet" data-modal-target="Internet">
           <img src="https://win98icons.alexmeub.com/icons/png/briefcase-3.png" class="h-8 w-8" alt="Internet Icon" onerror="this.style.display='none'" />
         </div>
-        <div class="taskbar-icon" title="Projects">
+        <div class="taskbar-icon" title="Projects" data-modal-target="Projects">
           <img src="https://win98icons.alexmeub.com/icons/png/folder_closed-4.png" class="h-8 w-8" alt="Projects Icon" onerror="this.style.display='none'" />
         </div>
-        <div class="taskbar-icon" title="Resume">
+        <div class="taskbar-icon" title="Resume" data-modal-target="Resume">
           <img src="https://win98icons.alexmeub.com/icons/png/notepad_file-2.png" class="h-8 w-8" alt="Resume Icon" onerror="this.style.display='none'" />
         </div>
       </div>
     </div>
-    <!-- Taskbar right -  clock -->
-    <div class="flex-grow"></div>
+    <!-- Taskbar window buttons -->
+    <div id="taskbar-windows" class="flex-grow flex items-center mx-2"></div>
+    <!-- Taskbar right - clock and system tray -->
     <div id="system-tray" class="ui-panel p-1 flex items-center gap-2" style="border-style: inset">
+      <div id="sound-control" class="taskbar-icon">
+        <img src="https://win98icons.alexmeub.com/icons/png/speaker-3.png" class="h-6 w-6" alt="Volume" />
+      </div>
       <span id="clock" class="text-sm" style="font-family: 'Arial', sans-serif"></span>
     </div>
   </div>
@@ -327,9 +610,11 @@
   <!-- Modal windows -->
   <div id="modal-overlay" class="hidden fixed inset-0 bg-black bg-opacity-50 z-40 flex items-center justify-center p-4">
     <div id="modal-window" class="ui-panel w-full max-w-lg">
-      <div class="title-bar">
+      <div class="title-bar window-draggable" id="modal-window-title">
         <span id="modal-title"></span>
         <div class="window-controls">
+          <div class="window-control modal-minimize">_</div>
+          <div class="window-control modal-maximize">□</div>
           <div id="modal-close-button" class="window-control">X</div>
         </div>
       </div>
@@ -348,6 +633,51 @@
       </div>
       <div class="p-2 bg-black">
         <img id="gif-image" src="" alt="Random 90s GIF" class="max-w-xs sm:max-w-sm md:max-w-md max-h-[60vh]" />
+      </div>
+    </div>
+  </div>
+
+  <!-- Games Window -->
+  <div id="games-window" class="hidden ui-panel absolute top-20 left-20 w-96 z-30">
+    <div class="title-bar window-draggable">
+      <span>Games</span>
+      <div class="window-controls">
+        <div class="window-control games-minimize">_</div>
+        <div class="window-control games-maximize">□</div>
+        <div class="window-control games-close">X</div>
+      </div>
+    </div>
+    <!-- <div class="p-4 bg-white" style="border: 2px inset #c0c0c0; height: 400px; overflow-y: auto;">
+      <h2 class="text-2xl font-bold mb-4">Retro Games Collection</h2>
+      <div class="grid grid-cols-2 gap-4">
+        <div class="ui-panel p-4 text-center cursor-pointer hover:bg-[#000080] hover:text-white" id="snake-game-btn">
+          <img src="https://win98icons.alexmeub.com/icons/png/joystick-4.png" class="h-16 w-16 mx-auto mb-2" alt="Snake Game">
+          <p>Snake</p>
+        </div>
+        <div class="ui-panel p-4 text-center cursor-pointer hover:bg-[#000080] hover:text-white" id="minesweeper-game-btn">
+          <img src="https://win98icons.alexmeub.com/icons/png/minesweeper-4.png" class="h-16 w-16 mx-auto mb-2" alt="Minesweeper">
+          <p>Minesweeper</p>
+        </div>
+      </div>
+    </div> -->
+  </div>
+
+  <!-- Snake Game -->
+  <div id="snake-game" class="hidden ui-panel absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50">
+    <div class="title-bar window-draggable">
+      <span>Snake</span>
+      <div class="window-controls">
+        <div class="window-control snake-close">X</div>
+      </div>
+    </div>
+    <div class="p-4 bg-white" style="border: 2px inset #c0c0c0;">
+      <canvas id="snake-canvas" width="400" height="400" class="border-2 border-black"></canvas>
+      <div class="mt-4 flex justify-between items-center">
+        <div>
+          <p>Score: <span id="snake-score">0</span></p>
+          <p>High Score: <span id="snake-high-score">0</span></p>
+        </div>
+        <button id="snake-restart" class="retro-button">Restart</button>
       </div>
     </div>
   </div>
@@ -380,41 +710,104 @@
       <div id="loading-bar" class="h-full bg-blue-500" style="width: 0"></div>
     </div>
     <p class="text-white text-lg mt-2">Afnan Portfolio is starting up...</p>
+    <p class="text-white text-sm mt-2" id="loading-tip">Tip: Right-click for more options</p>
   </div>
 
   <script>
+    // Enhanced JavaScript with all new features
     document.addEventListener("DOMContentLoaded", function () {
       const loader = document.getElementById("loader");
       const loadingBar = document.getElementById("loading-bar");
+      const loadingTip = document.getElementById("loading-tip");
       const body = document.querySelector("body");
-      // Add a class to the body to set the cursor to 'wait'
+      const tips = [
+        "Tip: Right-click for more options",
+        "Tip: Try dragging windows around",
+        "Tip: Click the minimize/maximize buttons",
+        "Tip: Open the Games folder for some fun",
+        "Tip: Try the Matrix mode for a cool effect"
+      ];
+      
+      // Add loading class to body
       body.classList.add("loading");
+      
       let progress = 0;
+      let tipIndex = 0;
+      
+      // Rotate tips during loading
+      const tipInterval = setInterval(() => {
+        tipIndex = (tipIndex + 1) % tips.length;
+        loadingTip.textContent = tips[tipIndex];
+      }, 3000);
+      
       const interval = setInterval(() => {
         progress += Math.random() * 10;
         if (progress > 100) {
           progress = 100;
         }
         loadingBar.style.width = progress + "%";
+        
         if (progress === 100) {
           clearInterval(interval);
+          clearInterval(tipInterval);
           setTimeout(() => {
             loader.style.display = "none";
-            // Remove the loading class to restore the default cursor
             body.classList.remove("loading");
+            // Create desktop particles after loading
+            createDesktopParticles();
           }, 500);
         }
       }, 200);
     });
+
+    // Create floating particles for desktop
+    function createDesktopParticles() {
+      const particleContainer = document.getElementById('particle-container');
+      const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
+      
+      for (let i = 0; i < 20; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'desktop-particle';
+        
+        const size = Math.random() * 5 + 2;
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+        particle.style.left = `${Math.random() * 100}vw`;
+        particle.style.top = `${Math.random() * 100}vh`;
+        particle.style.opacity = Math.random() * 0.5 + 0.1;
+        
+        particleContainer.appendChild(particle);
+        
+        // Animate particles
+        animateParticle(particle);
+      }
+    }
+    
+    function animateParticle(particle) {
+      const duration = Math.random() * 20 + 10;
+      const xMovement = Math.random() * 100 - 50;
+      const yMovement = Math.random() * 100 - 50;
+      
+      particle.animate([
+        { transform: 'translate(0, 0)', opacity: particle.style.opacity },
+        { transform: `translate(${xMovement}px, ${yMovement}px)`, opacity: 0 }
+      ], {
+        duration: duration * 1000,
+        iterations: Infinity,
+        direction: 'alternate',
+        easing: 'ease-in-out'
+      });
+    }
+
     // --- Start Menu ---
     const startButton = document.getElementById("start-button");
     const startMenu = document.getElementById("start-menu");
     startButton.addEventListener("click", (event) => {
-      // Stop the click from propagating to the document's click listener.
       event.stopPropagation();
-      // Toggle the 'hidden' class to show or hide the start menu.
       startMenu.classList.toggle("hidden");
     });
+
     // Modify the existing document click listener to also handle the start menu.
     document.addEventListener("click", (event) => {
       // Hide context menu if the click is outside of it.
@@ -430,19 +823,22 @@
         startMenu.classList.add("hidden");
       }
     });
+
     // --- Right-Click Context Menu ---
-    // An array of alternative background images.
     const backgroundImages = [
       "https://wallpapers.com/images/hd/old-windows-1920-x-1080-background-ngg7bmgpkxrk69lm.jpg",
       "https://assets.codepen.io/1502334/duke.png",
-      "https://assets.codepen.io/1502334/lara.png",
-      "https://assets.codepen.io/1502334/dreamweaver.png"
+      "https://assets.codepen.io/1502334/lara.png", 
     ];
     let currentBgIndex = 0;
     const contextMenu = document.getElementById("context-menu");
     const toggleBgSizeBtn = document.getElementById("toggle-bg-size-btn");
     const changeBgBtn = document.getElementById("change-bg-btn");
+    const rainEffectBtn = document.getElementById("rain-effect-btn");
+    const matrixEffectBtn = document.getElementById("matrix-effect-btn");
+    const minimizeAllBtn = document.getElementById("minimize-all-btn");
     const body = document.body;
+
     // Prevent the default browser context menu from appearing.
     document.addEventListener("contextmenu", (e) => {
       e.preventDefault();
@@ -451,16 +847,17 @@
       contextMenu.style.left = `${e.clientX}px`;
       contextMenu.classList.remove("hidden");
     });
+
     // Hide the context menu if the user clicks anywhere else on the page.
     document.addEventListener("click", (e) => {
       if (!contextMenu.contains(e.target)) {
         contextMenu.classList.add("hidden");
       }
     });
+
     // Handle the "Stretch/Tile Background" option.
     toggleBgSizeBtn.addEventListener("click", () => {
       body.classList.toggle("bg-cover");
-      // Update the button text to reflect the current state.
       if (body.classList.contains("bg-cover")) {
         toggleBgSizeBtn.textContent = "Tile Background";
       } else {
@@ -468,31 +865,233 @@
       }
       contextMenu.classList.add("hidden");
     });
+
     // Handle the "Next Background" option.
     changeBgBtn.addEventListener("click", () => {
-      // Move to the next image in the array, looping back to the start if necessary.
       currentBgIndex = (currentBgIndex + 1) % backgroundImages.length;
-      // Apply the new background image.
       body.style.backgroundImage = `url('${backgroundImages[currentBgIndex]}')`;
       contextMenu.classList.add("hidden");
     });
+
+    // Handle the "Rain Effect" option.
+    let rainActive = false;
+    rainEffectBtn.addEventListener("click", () => {
+      rainActive = !rainActive;
+      const rainContainer = document.getElementById('rain-container');
+      
+      if (rainActive) {
+        createRainEffect();
+        rainContainer.style.display = 'block';
+        rainEffectBtn.textContent = "Stop Rain";
+      } else {
+        rainContainer.innerHTML = '';
+        rainContainer.style.display = 'none';
+        rainEffectBtn.textContent = "Start Rain";
+      }
+      contextMenu.classList.add("hidden");
+    });
+
+    // Handle the "Matrix Effect" option.
+    let matrixActive = false;
+    matrixEffectBtn.addEventListener("click", () => {
+      matrixActive = !matrixActive;
+      const matrixCode = document.getElementById('matrix-code');
+      
+      if (matrixActive) {
+        matrixCode.style.opacity = "1";
+        startMatrixEffect();
+        matrixEffectBtn.textContent = "Exit Matrix";
+      } else {
+        matrixCode.style.opacity = "0";
+        matrixCode.innerHTML = '';
+        matrixEffectBtn.textContent = "Matrix Mode";
+      }
+      contextMenu.classList.add("hidden");
+    });
+
+    // Handle the "Minimize All" option.
+    minimizeAllBtn.addEventListener("click", () => {
+      const windows = document.querySelectorAll('[id$="-window"], .ui-panel:not(#taskbar):not(#context-menu):not(#start-menu)');
+      windows.forEach(window => {
+        if (!window.classList.contains('hidden')) {
+          window.classList.add('window-minimized');
+          // Add to taskbar
+          addWindowToTaskbar(window);
+        }
+      });
+      contextMenu.classList.add("hidden");
+    });
+
+    // Create rain effect
+    function createRainEffect() {
+      const rainContainer = document.getElementById('rain-container');
+      rainContainer.innerHTML = '';
+      
+      for (let i = 0; i < 100; i++) {
+        const drop = document.createElement('div');
+        drop.className = 'rain-drop';
+        drop.style.left = `${Math.random() * 100}%`;
+        drop.style.animationDuration = `${Math.random() * 1 + 0.5}s`;
+        drop.style.animationDelay = `${Math.random() * 2}s`;
+        rainContainer.appendChild(drop);
+      }
+    }
+
+    // Create Matrix code effect
+    function startMatrixEffect() {
+      const matrixCode = document.getElementById('matrix-code');
+      matrixCode.innerHTML = '';
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$#@%&!*';
+      
+      function createCodeChar() {
+        const char = document.createElement('div');
+        char.className = 'code-char';
+        char.textContent = chars.charAt(Math.floor(Math.random() * chars.length));
+        char.style.left = `${Math.random() * 100}%`;
+        char.style.fontSize = `${Math.random() * 20 + 10}px`;
+        char.style.animationDuration = `${Math.random() * 5 + 3}s`;
+        matrixCode.appendChild(char);
+        
+        setTimeout(() => {
+          char.remove();
+        }, 8000);
+      }
+      
+      // Create new characters periodically
+      setInterval(createCodeChar, 100);
+      
+      // Create initial characters
+      for (let i = 0; i < 50; i++) {
+        setTimeout(createCodeChar, i * 100);
+      }
+    }
+
     // --- BSOD Functionality ---
     const closeButton = document.getElementById("close-button");
     const bsodScreen = document.getElementById("bsod");
-    closeButton.addEventListener("click", () =>
-      bsodScreen.classList.remove("hidden")
-    );
+    closeButton.addEventListener("click", () => {
+      bsodScreen.classList.remove("hidden");
+      document.getElementById('main-window').classList.add('window-shake');
+      setTimeout(() => {
+        document.getElementById('main-window').classList.remove('window-shake');
+      }, 500);
+    });
+
     document.addEventListener("keydown", () => {
       if (!bsodScreen.classList.contains("hidden")) {
         bsodScreen.classList.add("hidden");
       }
     });
+
+    // --- Window Management ---
+    // Minimize, maximize, and close functionality
+    const minimizeButton = document.getElementById("minimize-button");
+    const maximizeButton = document.getElementById("maximize-button");
+    const mainWindow = document.getElementById("main-window");
+
+    minimizeButton.addEventListener("click", () => {
+      mainWindow.classList.add("window-minimized");
+      addWindowToTaskbar(mainWindow);
+    });
+
+    maximizeButton.addEventListener("click", () => {
+      mainWindow.classList.toggle("window-maximized");
+    });
+
+    // Make windows draggable
+    let isDragging = false;
+    let currentX;
+    let currentY;
+    let initialX;
+    let initialY;
+    let xOffset = 0;
+    let yOffset = 0;
+
+    const draggableElements = document.querySelectorAll(".window-draggable");
+    
+    draggableElements.forEach(element => {
+      element.addEventListener("mousedown", dragStart);
+      element.addEventListener("mouseup", dragEnd);
+      element.addEventListener("mousemove", drag);
+    });
+
+    function dragStart(e) {
+      if (e.button !== 0) return; // Only left click
+      
+      initialX = e.clientX - xOffset;
+      initialY = e.clientY - yOffset;
+      
+      if (e.target.classList.contains("window-draggable")) {
+        isDragging = true;
+      }
+    }
+
+    function dragEnd(e) {
+      if (e.button !== 0) return;
+      
+      initialX = currentX;
+      initialY = currentY;
+      
+      isDragging = false;
+    }
+
+    function drag(e) {
+      if (e.button !== 0 || !isDragging) return;
+      
+      e.preventDefault();
+      
+      currentX = e.clientX - initialX;
+      currentY = e.clientY - initialY;
+      
+      xOffset = currentX;
+      yOffset = currentY;
+      
+      setTranslate(currentX, currentY, e.target.parentElement);
+    }
+
+    function setTranslate(xPos, yPos, el) {
+      if (!el.classList.contains("window-maximized")) {
+        el.style.transform = `translate3d(${xPos}px, ${yPos}px, 0)`;
+      }
+    }
+
+    // Taskbar window management
+    function addWindowToTaskbar(windowElement) {
+      const taskbarWindows = document.getElementById("taskbar-windows");
+      const windowId = windowElement.id;
+      
+      // Check if already in taskbar
+      if (document.getElementById(`taskbar-${windowId}`)) return;
+      
+      const button = document.createElement("div");
+      button.id = `taskbar-${windowId}`;
+      button.className = 'taskbar-window-button';
+      button.textContent = windowElement.querySelector('.title-bar span').textContent;
+      
+      button.addEventListener("click", () => {
+        // Toggle window visibility
+        windowElement.classList.toggle("window-minimized");
+        
+        // Toggle active state
+        document.querySelectorAll('.taskbar-window-button').forEach(btn => {
+          btn.classList.remove('active');
+        });
+        
+        if (!windowElement.classList.contains("window-minimized")) {
+          button.classList.add('active');
+        }
+      });
+      
+      taskbarWindows.appendChild(button);
+    }
+
     // --- Reusable Modal Functionality ---
     const modalOverlay = document.getElementById("modal-overlay");
     const modalWindow = document.getElementById("modal-window");
     const modalTitle = document.getElementById("modal-title");
     const modalContent = document.getElementById("modal-content");
     const modalCloseButton = document.getElementById("modal-close-button");
+
     // Centralized data object for all modal content.
     const modalData = {
       "Projects": {
@@ -525,7 +1124,6 @@
                        <li><strong>Email:</strong> afnanthara11@gmail.com</li>
                        <li><strong>LinkedIn:</strong> linkedin.com/in/afnan-baig</li>
                        <li><strong>GitHub:</strong> github.com/afnan111</li>
-                   
                      </ul>`
       },
       "My Computer": {
@@ -570,19 +1168,17 @@
                        <li>Developed comprehensive admin dashboard with real-time analytics</li>
                      </ul>
 
-                        <p class="mb-2"><strong>  Full Stack Developer</strong> | March 2023 - July 2024 | HBL Mfb Bank</p>
-                    <ul class="list-disc pl-5 mb-4">
-  <li>Implemented scalable microservices reducing server response time by 70%</li>
-  <li>Built interactive admin dashboard with live performance monitoring</li>
-</ul>
+                     <p class="mb-2"><strong>Full Stack Developer</strong> | March 2023 - July 2024 | HBL Mfb Bank</p>
+                     <ul class="list-disc pl-5 mb-4">
+                       <li>Implemented scalable microservices reducing server response time by 70%</li>
+                       <li>Built interactive admin dashboard with live performance monitoring</li>
+                     </ul>
 
-
-                        <p class="mb-2"><strong>Full Stack Developer</strong> | Jan 2020 - Feb 2022 |Webzela Tech</p>
-                    <ul class="list-disc pl-5 mb-4">
-  <li>Engineered microservices infrastructure improving system efficiency and reliability</li>
-  <li>Created dynamic admin dashboard providing actionable insights in real-time</li>
-</ul>
-
+                     <p class="mb-2"><strong>Full Stack Developer</strong> | Jan 2020 - Feb 2022 |Webzela Tech</p>
+                     <ul class="list-disc pl-5 mb-4">
+                       <li>Engineered microservices infrastructure improving system efficiency and reliability</li>
+                       <li>Created dynamic admin dashboard providing actionable insights in real-time</li>
+                     </ul>
                      
                      <p class="text-sm mt-6">For complete resume details, please contact me directly.</p>`
       },
@@ -591,6 +1187,7 @@
         content: ``
       }
     };
+
     const openInternetExplorer = () => {
       const data = modalData["Internet"];
       if (data) {
@@ -608,8 +1205,8 @@
         }, 5000);
       }
     };
+
     // This function opens the modal and populates it with the correct data.
-    // It's called by multiple event listeners, making the code more reusable (DRY).
     const openModal = (targetKey) => {
       if (targetKey === "Internet") {
         openInternetExplorer();
@@ -621,10 +1218,11 @@
         modalContent.innerHTML = data.content;
         modalContent.style.backgroundColor = "white";
         modalOverlay.classList.remove("hidden");
+        addWindowToTaskbar(modalWindow);
       }
     };
+
     // Select ALL elements that should trigger a modal and loop through them.
-    // This includes the main CTA buttons and the new desktop icons.
     const modalTriggers = document.querySelectorAll("[data-modal-target]");
     modalTriggers.forEach((trigger) => {
       trigger.addEventListener("click", () => {
@@ -632,22 +1230,231 @@
         openModal(targetKey);
       });
     });
-    const closeModal = () => modalOverlay.classList.add("hidden");
+
+    const closeModal = () => {
+      modalOverlay.classList.add("hidden");
+      // Remove from taskbar
+      const taskbarButton = document.getElementById(`taskbar-${modalWindow.id}`);
+      if (taskbarButton) {
+        taskbarButton.remove();
+      }
+    };
+    
     modalCloseButton.addEventListener("click", closeModal);
     modalOverlay.addEventListener("click", (event) => {
       if (event.target === modalOverlay) closeModal();
     });
+
+    // --- Games Functionality ---
+    const gamesFolder = document.getElementById("games-folder");
+    const gamesWindow = document.getElementById("games-window");
+    const snakeGameBtn = document.getElementById("snake-game-btn");
+    const snakeGame = document.getElementById("snake-game");
+    const snakeCloseBtn = snakeGame.querySelector(".snake-close");
+    const gamesCloseBtn = gamesWindow.querySelector(".games-close");
+    const gamesMinimizeBtn = gamesWindow.querySelector(".games-minimize");
+    const gamesMaximizeBtn = gamesWindow.querySelector(".games-maximize");
+
+    gamesFolder.addEventListener("click", () => {
+      gamesWindow.classList.remove("hidden");
+      addWindowToTaskbar(gamesWindow);
+    });
+
+    snakeGameBtn.addEventListener("click", () => {
+      snakeGame.classList.remove("hidden");
+      gamesWindow.classList.add("hidden");
+      initSnakeGame();
+      addWindowToTaskbar(snakeGame);
+    });
+
+    snakeCloseBtn.addEventListener("click", () => {
+      snakeGame.classList.add("hidden");
+    });
+
+    gamesCloseBtn.addEventListener("click", () => {
+      gamesWindow.classList.add("hidden");
+    });
+
+    gamesMinimizeBtn.addEventListener("click", () => {
+      gamesWindow.classList.add("window-minimized");
+      addWindowToTaskbar(gamesWindow);
+    });
+
+    gamesMaximizeBtn.addEventListener("click", () => {
+      gamesWindow.classList.toggle("window-maximized");
+    });
+
+    // Snake Game Implementation
+    function initSnakeGame() {
+      const canvas = document.getElementById("snake-canvas");
+      const ctx = canvas.getContext("2d");
+      const snakeScore = document.getElementById("snake-score");
+      const snakeHighScore = document.getElementById("snake-high-score");
+      const snakeRestart = document.getElementById("snake-restart");
+      
+      const gridSize = 20;
+      const gridWidth = canvas.width / gridSize;
+      const gridHeight = canvas.height / gridSize;
+      
+      let snake = [];
+      let food = {};
+      let direction = 'right';
+      let gameInterval;
+      let score = 0;
+      let highScore = localStorage.getItem('snakeHighScore') || 0;
+      
+      snakeHighScore.textContent = highScore;
+      
+      function initGame() {
+        snake = [{x: 10, y: 10}];
+        generateFood();
+        score = 0;
+        snakeScore.textContent = score;
+        direction = 'right';
+        
+        if (gameInterval) clearInterval(gameInterval);
+        gameInterval = setInterval(gameLoop, 150);
+      }
+      
+      function generateFood() {
+        food = {
+          x: Math.floor(Math.random() * gridWidth),
+          y: Math.floor(Math.random() * gridHeight)
+        };
+        
+        // Make sure food doesn't appear on snake
+        for (let i = 0; i < snake.length; i++) {
+          if (snake[i].x === food.x && snake[i].y === food.y) {
+            return generateFood();
+          }
+        }
+      }
+      
+      function gameLoop() {
+        moveSnake();
+        
+        if (checkCollision()) {
+          clearInterval(gameInterval);
+          alert('Game Over! Your score: ' + score);
+          return;
+        }
+        
+        if (snake[0].x === food.x && snake[0].y === food.y) {
+          score++;
+          snakeScore.textContent = score;
+          
+          if (score > highScore) {
+            highScore = score;
+            snakeHighScore.textContent = highScore;
+            localStorage.setItem('snakeHighScore', highScore);
+          }
+          
+          generateFood();
+        } else {
+          snake.pop();
+        }
+        
+        draw();
+      }
+      
+      function moveSnake() {
+        const head = {x: snake[0].x, y: snake[0].y};
+        
+        switch (direction) {
+          case 'up': head.y--; break;
+          case 'down': head.y++; break;
+          case 'left': head.x--; break;
+          case 'right': head.x++; break;
+        }
+        
+        snake.unshift(head);
+      }
+      
+      function checkCollision() {
+        const head = snake[0];
+        
+        // Wall collision
+        if (head.x < 0 || head.x >= gridWidth || head.y < 0 || head.y >= gridHeight) {
+          return true;
+        }
+        
+        // Self collision
+        for (let i = 1; i < snake.length; i++) {
+          if (head.x === snake[i].x && head.y === snake[i].y) {
+            return true;
+          }
+        }
+        
+        return false;
+      }
+      
+      function draw() {
+        // Clear canvas
+        ctx.fillStyle = 'white';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        // Draw snake
+        ctx.fillStyle = 'green';
+        for (let i = 0; i < snake.length; i++) {
+          ctx.fillRect(snake[i].x * gridSize, snake[i].y * gridSize, gridSize - 1, gridSize - 1);
+        }
+        
+        // Draw food
+        ctx.fillStyle = 'red';
+        ctx.fillRect(food.x * gridSize, food.y * gridSize, gridSize - 1, gridSize - 1);
+      }
+      
+      // Control the snake with keyboard
+      document.addEventListener('keydown', (e) => {
+        switch (e.key) {
+          case 'ArrowUp':
+            if (direction !== 'down') direction = 'up';
+            break;
+          case 'ArrowDown':
+            if (direction !== 'up') direction = 'down';
+            break;
+          case 'ArrowLeft':
+            if (direction !== 'right') direction = 'left';
+            break;
+          case 'ArrowRight':
+            if (direction !== 'left') direction = 'right';
+            break;
+        }
+      });
+      
+      snakeRestart.addEventListener('click', initGame);
+      
+      // Initialize the game
+      initGame();
+    }
+
+    // --- Run Dialog ---
+    const runBtn = document.getElementById("run-btn");
+    const runDialog = document.getElementById("run-dialog");
+    const runDialogClose = document.getElementById("run-dialog-close");
+    const runCancelBtn = document.getElementById("run-cancel-btn");
+    
+    runBtn.addEventListener("click", () => {
+      runDialog.classList.remove("hidden");
+    });
+    
+    runDialogClose.addEventListener("click", () => {
+      runDialog.classList.add("hidden");
+    });
+    
+    runCancelBtn.addEventListener("click", () => {
+      runDialog.classList.add("hidden");
+    });
+
     // --- GIF Window Functionality ---
     const gifUrls = [
       "https://i.gifer.com/EfEa.gif",
       "https://i.gifer.com/6VDN.gif",
- 
       "https://i.gifer.com/KbSB.gif",
       "https://i.gifer.com/K1J7.gif",
       "https://i.gifer.com/1Xs.gif",
       "https://i.gifer.com/2Nli.gif",
       "https://i.gifer.com/3Fjh.gif",
-     
     ];
     const gifTriggerIcons = document.querySelectorAll(".taskbar-icon");
     const gifWindowOverlay = document.getElementById("gif-window-overlay");
@@ -669,6 +1476,7 @@
     gifWindowOverlay.addEventListener("click", (event) => {
       if (event.target === gifWindowOverlay) closeGifWindow();
     });
+
     // --- Clock Functionality ---
     const clockElement = document.getElementById("clock");
     const updateClock = () => {
@@ -682,6 +1490,27 @@
     };
     updateClock();
     setInterval(updateClock, 1000);
+
+    // Easter egg functionality
+    const easterEggTriggers = document.querySelectorAll('.easter-egg-trigger');
+    easterEggTriggers.forEach(trigger => {
+      trigger.addEventListener('click', () => {
+        // Random easter egg effect
+        const effects = [
+          () => { document.body.style.filter = 'hue-rotate(180deg)'; setTimeout(() => { document.body.style.filter = ''; }, 2000); },
+          () => { document.querySelectorAll('*').forEach(el => { el.style.transform = 'rotate(180deg)'; }); setTimeout(() => { document.querySelectorAll('*').forEach(el => { el.style.transform = ''; }); }, 1000); },
+          () => { document.body.style.animation = 'shake 0.5s'; setTimeout(() => { document.body.style.animation = ''; }, 500); },
+          () => { 
+            const oldBg = document.body.style.backgroundImage;
+            document.body.style.backgroundImage = 'url(https://i.gifer.com/7E4l.gif)';
+            setTimeout(() => { document.body.style.backgroundImage = oldBg; }, 2000);
+          }
+        ];
+        
+        const randomEffect = effects[Math.floor(Math.random() * effects.length)];
+        randomEffect();
+      });
+    });
   </script>
 </body>
 </html>
