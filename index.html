@@ -1,1267 +1,687 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>vCard - Personal Portfolio</title>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Afnan Baig - Full Stack Developer</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet" />
 
-    <!--
-    - favicon
-  -->
-    <link
-      rel="shortcut icon"
-      href="./assets/images/logo.ico"
-      type="image/x-icon"
-    />
+  <style>
+    body {
+      background-image: url("https://assets.codepen.io/1502334/98.jpg");
+      background-color: #c0c0c0;
+      font-family: "VT323", monospace;
+      color: #000000;
+      padding-bottom: 40px;
+    }
 
-    <!--
-    - custom css link
-  -->
-    <link rel="stylesheet" href="./assets/css/style.css" />
+    .ui-panel {
+      background-color: #c0c0c0;
+      border-top: 2px solid #ffffff;
+      border-left: 2px solid #ffffff;
+      border-right: 2px solid #000000;
+      border-bottom: 2px solid #000000;
+      box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
 
-    <!--
-    - google font link
-  -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
-      rel="stylesheet"
-    />
-  </head>
+    .title-bar {
+      background: linear-gradient(to right, #000080, #1084d0);
+      color: #ffffff;
+      padding: 4px 8px;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: "Arial", sans-serif;
+      font-size: 14px;
+      user-select: none;
+    }
 
-  <body >
-    <!--
-    - #MAIN
-  -->
+    .frozen .title-bar {
+      background: linear-gradient(to right, #808080, #c0c0c0);
+      color: #a0a0a0;
+    }
+
+    .window-controls {
+      display: flex;
+    }
+
+    .window-control {
+      width: 20px;
+      height: 20px;
+      background-color: #c0c0c0;
+      border-top: 1px solid #ffffff;
+      border-left: 1px solid #ffffff;
+      border-right: 1px solid #000000;
+      border-bottom: 1px solid #000000;
+      margin-left: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .retro-button {
+      background-color: #c0c0c0;
+      border: 2px outset #c0c0c0;
+      padding: 8px 16px;
+      font-family: "VT323", monospace;
+      font-size: 20px;
+      cursor: pointer;
+      transition: all 0.1s ease-in-out;
+    }
+
+    .retro-button:active {
+      border-style: inset;
+    }
+
+    .blinking-bsod-cursor {
+      animation: blink-bsod 1s step-end infinite;
+    }
+
+    @keyframes blink-bsod {
+      50% {
+        color: transparent;
+      }
+    }
+
+    .blinking-text-cursor {
+      animation: blink-text 1s step-end infinite;
+    }
+
+    @keyframes blink-text {
+      50% {
+        border-right-color: transparent;
+      }
+    }
+
+    .taskbar-icon {
+      padding: 2px;
+      border: 1px solid transparent;
+      cursor: pointer;
+    }
+
+    .taskbar-icon:hover {
+      background-color: #dfdfdf;
+      border: 1px dotted #000000;
+    }
+
+    #desktop-icons {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .desktop-icon {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 80px;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .desktop-icon span {
+      color: white;
+      text-shadow: 1px 1px 2px black;
+      padding: 2px 4px;
+    }
+
+    .desktop-icon:hover span {
+      background-color: #000080;
+    }
+
+    @media screen and (max-width: 650px) {
+      body {
+        background-image: url("https://www.transparenttextures.com/patterns/az-subtle.png");
+      }
+
+      #desktop-icons {
+        flex-direction: row;
+      }
+
+      #desktop-warn {
+        display: none;
+      }
+
+      #main-window {
+        transform: translateY(25px);
+      }
+    }
+
+    /* To change bg image */
+    body.bg-cover {
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    .modal-content ul {
+      list-style-type: disc;
+      margin-left: 1.5rem;
+      margin-bottom: 1rem;
+    }
     
+    .modal-content li {
+      margin-bottom: 0.5rem;
+    }
+    
+    .modal-content strong {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body class="min-h-screen w-full flex flex-col items-center justify-center p-4 text-xl">
+  <!-- Context menu -->
+  <div id="context-menu" class="hidden ui-panel absolute z-50 text-base">
+    <ul class="p-1" style="font-family: 'Arial', sans-serif">
+      <li id="toggle-bg-size-btn" class="px-4 py-1 hover:bg-[#000080] hover:text-white cursor-pointer">
+        Stretch Background
+      </li>
+      <li id="change-bg-btn" class="px-4 py-1 hover:bg-[#000080] hover:text-white cursor-pointer">
+        Next Background
+      </li>
+    </ul>
+  </div>
 
-    <main > 
-      <!--
-      - #SIDEBAR
-    -->
-
-      <aside class="sidebar" data-sidebar>
-        <div class="sidebar-info">
-          <figure class="avatar-box">
-            <img
-              src="./assets/images/my-avatar.png"
-              alt="Afnan Baig"
-              width="80"
-            />
-          </figure>
-
-          <div class="info-content">
-            <h1 class="name" title="Afnan Baig">Afnan Baig</h1>
-
-            <p class="title">Full Stack Developer</p>
-          </div>
-
-          <button class="info_more-btn" data-sidebar-btn>
-            <span>Show Contacts</span>
-
-            <ion-icon name="chevron-down"></ion-icon>
-          </button>
+  <!-- Start menu -->
+  <div id="start-menu" class="hidden ui-panel absolute bottom-10 left-0 z-50" style="width: 200px">
+    <div class="flex h-full">
+      <div class="w-8 bg-[#000080] text-white p-2 flex items-end">
+        <div style="writing-mode: vertical-rl; transform: rotate(180deg)" class="text-xl">
+          <span class="font-bold italic">Windows</span><span class="font-light">98</span>
         </div>
-
-        <div class="sidebar-info_more">
-          <div class="separator"></div>
-
-          <ul class="contacts-list">
-            <li class="contact-item">
-              <div class="icon-box">
-                <ion-icon name="mail-outline"></ion-icon>
-              </div>
-
-              <div class="contact-info">
-                <p class="contact-title">Email</p>
-
-                <a href="mailto:afnanthara11@gmail.com" class="contact-link"
-                  >afnanthara11@gmail.com</a
-                >
-              </div>
-            </li>
-
-            <li class="contact-item">
-              <div class="icon-box">
-                <ion-icon name="phone-portrait-outline"></ion-icon>
-              </div>
-
-              <div class="contact-info">
-                <p class="contact-title">Phone</p>
-
-                <a href="tel:+4915751342553" class="contact-link"
-                  >+49 157 51342553</a
-                >
-              </div>
-            </li>
-
-            <li class="contact-item">
-              <div class="icon-box">
-                <ion-icon name="calendar-outline"></ion-icon>
-              </div>
-
-              <div class="contact-info">
-                <p class="contact-title">Birthday</p>
-
-                <time datetime="1995-08-15">August 2, 1999</time>
-              </div>
-            </li>
-
-            <li class="contact-item">
-              <div class="icon-box">
-                <ion-icon name="location-outline"></ion-icon>
-              </div>
-
-              <div class="contact-info">
-                <p class="contact-title">Location</p>
-
-                <address>Berlin, Germany</address>
-              </div>
-            </li>
-          </ul>
-
-          <div class="separator"></div>
-
-          <ul class="social-list">
-            <li class="social-item">
-              <a href="#" class="social-link">
-                <ion-icon name="logo-linkedin"></ion-icon>
-              </a>
-            </li>
-
-            <li class="social-item">
-              <a href="#" class="social-link">
-                <ion-icon name="logo-github"></ion-icon>
-              </a>
-            </li>
-
-            <li class="social-item">
-              <a href="#" class="social-link">
-                <ion-icon name="logo-twitter"></ion-icon>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </aside>
-
-      <!--
-      - #main-content
-    -->
-
-      <div class="main-content">
-        <!--
-        - #NAVBAR
-      -->
-
-        <nav class="navbar">
-          <ul class="navbar-list">
-            <li class="navbar-item">
-              <button class="navbar-link active" data-nav-link>About</button>
-            </li>
-
-            <li class="navbar-item">
-              <button class="navbar-link" data-nav-link>Resume</button>
-            </li>
-
-            <li class="navbar-item">
-              <button class="navbar-link" data-nav-link>Portfolio</button>
-            </li>
-
-            <li class="navbar-item">
-              <button class="navbar-link" data-nav-link>Blog</button>
-            </li>
-
-            <li class="navbar-item">
-              <button class="navbar-link" data-nav-link>Contact</button>
-            </li>
-          </ul>
-        </nav>
-
-        <!--
-        - #ABOUT
-      -->
-
-        <article class="about active" data-page="about">
-          <header>
-            <h2 class="h2 article-title">About me</h2>
-          </header>
-
-          <section class="about-text">
-            <p>
-              I'm a Full Stack Developer from Berlin, Germany, specializing in
-              creating responsive and user-friendly web applications. With
-              expertise in both frontend and backend technologies, I enjoy
-              solving complex problems and delivering efficient solutions.
-            </p>
-
-            <p>
-              My focus is on building applications that are not only functional
-              but also provide an exceptional user experience. I pay attention
-              to details and ensure that the products I develop are scalable,
-              maintainable, and performant. I've worked with various companies,
-              from startups to established enterprises, helping them bring their
-              digital visions to life.
-            </p>
-          </section>
-
-          <!--
-          - service
-        -->
-
-          <section class="service">
-            <h3 class="h3 service-title">What i'm doing</h3>
-
-            <ul class="service-list">
-              <li class="service-item">
-                <div class="service-icon-box">
-                  <img
-                    src="./assets/images/icon-design.svg"
-                    alt="design icon"
-                    width="40"
-                  />
-                </div>
-
-                <div class="service-content-box">
-                  <h4 class="h4 service-item-title">Web design</h4>
-
-                  <p class="service-item-text">
-                    Creating modern and responsive designs that work across all
-                    devices and platforms.
-                  </p>
-                </div>
-              </li>
-
-              <li class="service-item">
-                <div class="service-icon-box">
-                  <img
-                    src="./assets/images/icon-dev.svg"
-                    alt="Web development icon"
-                    width="40"
-                  />
-                </div>
-
-                <div class="service-content-box">
-                  <h4 class="h4 service-item-title">Web development</h4>
-
-                  <p class="service-item-text">
-                    Developing high-quality websites and applications using the
-                    latest technologies.
-                  </p>
-                </div>
-              </li>
-
-              <li class="service-item">
-                <div class="service-icon-box">
-                  <img
-                    src="./assets/images/icon-app.svg"
-                    alt="mobile app icon"
-                    width="40"
-                  />
-                </div>
-
-                <div class="service-content-box">
-                  <h4 class="h4 service-item-title">Responsive Design</h4>
-
-                  <p class="service-item-text">
-                    Building a responsive and stunning websites.
-                  </p>
-                </div>
-              </li>
-
-              <li class="service-item">
-                <div class="service-icon-box">
-                  <img
-                    src="./assets/images/icon-photo.svg"
-                    alt="camera icon"
-                    width="40"
-                  />
-                </div>
-
-                <div class="service-content-box">
-                  <h4 class="h4 service-item-title">API Development</h4>
-
-                  <p class="service-item-text">
-                    Designing and implementing RESTful APIs and microservices
-                    for various applications.
-                  </p>
-                </div>
-              </li>
-            </ul>
-          </section>
-
-          <!--
-          - testimonials
-        -->
-
-          <section class="testimonials">
-            <h3 class="h3 testimonials-title">Testimonials</h3>
-
-            <ul class="testimonials-list has-scrollbar">
-              <li class="testimonials-item">
-                <div class="content-card" data-testimonials-item>
-                  <figure class="testimonials-avatar-box">
-                    <img
-                      src="./assets/images/avatar-1.png"
-                      alt="Michael Schmidt"
-                      width="60"
-                      data-testimonials-avatar
-                    />
-                  </figure>
-
-                  <h4
-                    class="h4 testimonials-item-title"
-                    data-testimonials-title
-                  >
-                    Michael Schmidt
-                  </h4>
-
-                  <div class="testimonials-text" data-testimonials-text>
-                    <p>
-                      afnan developed our company's lead management system from
-                      scratch. The system has significantly improved our
-                      workflow efficiency and reduced errors. He demonstrated
-                      excellent problem-solving skills and delivered the project
-                      ahead of schedule.
-                    </p>
-                  </div>
-                </div>
-              </li>
-
-              <li class="testimonials-item">
-                <div class="content-card" data-testimonials-item>
-                  <figure class="testimonials-avatar-box">
-                    <img
-                      src="./assets/images/avatar-2.png"
-                      alt="Sarah Müller"
-                      width="60"
-                      data-testimonials-avatar
-                    />
-                  </figure>
-
-                  <h4
-                    class="h4 testimonials-item-title"
-                    data-testimonials-title
-                  >
-                    Sarah Müller
-                  </h4>
-
-                  <div class="testimonials-text" data-testimonials-text>
-                    <p>
-                      Working with afnan was a great experience. He transformed
-                      our legacy system into a modern, scalable application. His
-                      technical expertise and attention to detail ensured a
-                      smooth transition with minimal downtime. I would highly
-                      recommend him for complex development projects.
-                    </p>
-                  </div>
-                </div>
-              </li>
-
-              <li class="testimonials-item">
-                <div class="content-card" data-testimonials-item>
-                  <figure class="testimonials-avatar-box">
-                    <img
-                      src="./assets/images/avatar-3.png"
-                      alt="David Wagner"
-                      width="60"
-                      data-testimonials-avatar
-                    />
-                  </figure>
-
-                  <h4
-                    class="h4 testimonials-item-title"
-                    data-testimonials-title
-                  >
-                    David Wagner
-                  </h4>
-
-                  <div class="testimonials-text" data-testimonials-text>
-                    <p>
-                      afnan built our e-commerce platform with integrated payment
-                      processing. The site handles high traffic volumes
-                      efficiently, and the checkout process is seamless. His
-                      ability to understand business requirements and translate
-                      them into technical solutions is impressive.
-                    </p>
-                  </div>
-                </div>
-              </li>
-
-              <li class="testimonials-item">
-                <div class="content-card" data-testimonials-item>
-                  <figure class="testimonials-avatar-box">
-                    <img
-                      src="./assets/images/avatar-4.png"
-                      alt="Julia Fischer"
-                      width="60"
-                      data-testimonials-avatar
-                    />
-                  </figure>
-
-                  <h4
-                    class="h4 testimonials-item-title"
-                    data-testimonials-title
-                  >
-                    Julia Fischer
-                  </h4>
-
-                  <div class="testimonials-text" data-testimonials-text>
-                    <p>
-                      We hired afnan to develop a custom dashboard for our
-                      analytics platform. He delivered a user-friendly interface
-                      with real-time data visualization that has become an
-                      indispensable tool for our decision-making process. His
-                      communication throughout the project was excellent.
-                    </p>
-                  </div>
-                </div>
-              </li>
-            </ul>
-          </section>
-
-          <!--
-          - testimonials modal
-        -->
-
-          <div class="modal-container" data-modal-container>
-            <div class="overlay" data-overlay></div>
-
-            <section class="testimonials-modal">
-              <button class="modal-close-btn" data-modal-close-btn>
-                <ion-icon name="close-outline"></ion-icon>
-              </button>
-
-              <div class="modal-img-wrapper">
-                <figure class="modal-avatar-box">
-                  <img
-                    src="./assets/images/avatar-1.png"
-                    alt="Michael Schmidt"
-                    width="80"
-                    data-modal-img
-                  />
-                </figure>
-
-                <img src="./assets/images/icon-quote.svg" alt="quote icon" />
-              </div>
-
-              <div class="modal-content">
-                <h4 class="h3 modal-title" data-modal-title>Michael Schmidt</h4>
-
-                <time datetime="2025-11-14">14 November, 2025</time>
-
-                <div data-modal-text>
-                  <p>
-                    afnan developed our company's lead management system from
-                    scratch. The system has significantly improved our workflow
-                    efficiency and reduced errors. He demonstrated excellent
-                    problem-solving skills and delivered the project ahead of
-                    schedule. His technical expertise and professional approach
-                    made the collaboration smooth and productive.
-                  </p>
-                </div>
-              </div>
-            </section>
-          </div>
-
-          <!--
-          - clients
-        -->
-
-         
-        </article>
-
-        <!--
-        - #RESUME
-      -->
-
-        <article class="resume" data-page="resume">
-          <header>
-            <h2 class="h2 article-title">Resume</h2>
-          </header>
-
-          <section class="timeline">
-            <div class="title-wrapper">
-              <div class="icon-box">
-                <ion-icon name="book-outline"></ion-icon>
-              </div>
-
-              <h3 class="h3">Education</h3>
-            </div>
-
-            <ol class="timeline-list">
-              <li class="timeline-item">
-                <h4 class="h4 timeline-item-title">
-                  Shaheed Zulfikar Ali Bhutto Institute of Science and
-                  Technology (SZABIST)
-                </h4>
-
-                <span>2017 — 2021</span>
-
-                <p class="timeline-text">
-                  Bachelor of Science in Computer Science
-                </p>
-              </li>
-            </ol>
-          </section>
-
-          <section class="timeline">
-            <div class="title-wrapper">
-              <div class="icon-box">
-                <ion-icon name="book-outline"></ion-icon>
-              </div>
-
-              <h3 class="h3">Experience</h3>
-            </div>
-
-            <ol class="timeline-list">
-              <li class="timeline-item">
-                <h4 class="h4 timeline-item-title">
-                  Senior Full Stack Developer
-                </h4>
-                <span class="company">Hogar Properties</span>
-                <span>2024 — 2025</span>
-
-                <p class="timeline-text">
-                  Architected and developed a full-stack lead management system
-                  using React (Frontend) and Node.js (Backend), resulting in a
-                  30% improvement in lead processing speed and a 50% reduction
-                  in manual data entry errors. Spearheaded the migration from a
-                  monolithic PHP legacy system to a scalable MERN stack
-                  (MongoDB, Express.js, React, Node.js), achieving a 20%
-                  reduction in server costs and significantly improved system
-                  maintainability.
-                </p>
-              </li>
-
-              <li class="timeline-item">
-                <h4 class="h4 timeline-item-title">
-                  Senior Full Stack Developer
-                </h4>
-                <span class="company">Allsopp & Allsopp Group</span>
-                <span>2025 — 2025</span>
-
-                <p class="timeline-text">
-                  Designed and deployed a micro services-based architecture that
-                  decreased page load times by 80% and increased overall site
-                  conversion rates by 15%. Developed a comprehensive admin
-                  dashboard integrated with real-time analytics, enabling
-                  data-driven decision-making and improving operational tracking
-                  efficiency by 40%.
-                </p>
-              </li>
-
-              <li class="timeline-item">
-                <h4 class="h4 timeline-item-title">
-                  Senior Full Stack Developer
-                </h4>
-                <span class="company">HBL Microfinance Bank</span>
-                <span>2022 — 2025</span>
-
-                <p class="timeline-text">
-                  Built sophisticated internal financial dashboards using Vue.js
-                  and Node.js, enhancing report generation speed by 40% and
-                  saving approximately 5 hours per week on manual data
-                  compilation. Refactored and optimized complex API endpoints,
-                  resulting in a 10% reduction in technical debt and a 45%
-                  improvement in API response times.
-                </p>
-              </li>
-
-              <li class="timeline-item">
-                <h4 class="h4 timeline-item-title">Full Stack Developer</h4>
-                <span class="company">Webzela Technologies</span>
-                <span>2020 — 2022</span>
-
-                <p class="timeline-text">
-                  Successfully delivered 20+ client projects ahead of schedule
-                  using React.js, Next.js Node.js, PHP, Angular, Python and
-                  WordPress, contributing to a 25% increase in client retention
-                  rate. Developed custom booking and payment integration systems
-                  for clients in the travel and fitness industries, facilitating
-                  over $500,000 in transaction processing.
-                </p>
-              </li>
-            </ol>
-          </section>
-
-          <section class="skill">
-            <h3 class="h3 skills-title">My skills</h3>
-
-            <ul class="skills-list content-card">
-              <li class="skills-item">
-                <div class="title-wrapper">
-                  <h5 class="h5">JavaScript/TypeScript</h5>
-                  <data value="95">95%</data>
-                </div>
-
-                <div class="skill-progress-bg">
-                  <div class="skill-progress-fill" style="width: 95%"></div>
-                </div>
-              </li>
-
-              <li class="skills-item">
-                <div class="title-wrapper">
-                  <h5 class="h5">React/Next.js</h5>
-                  <data value="90">90%</data>
-                </div>
-
-                <div class="skill-progress-bg">
-                  <div class="skill-progress-fill" style="width: 90%"></div>
-                </div>
-              </li>
-
-              <li class="skills-item">
-                <div class="title-wrapper">
-                  <h5 class="h5">Node.js/Express</h5>
-                  <data value="88">88%</data>
-                </div>
-
-                <div class="skill-progress-bg">
-                  <div class="skill-progress-fill" style="width: 88%"></div>
-                </div>
-              </li>
-
-              <li class="skills-item">
-                <div class="title-wrapper">
-                  <h5 class="h5">PHP/WordPress</h5>
-                  <data value="85">85%</data>
-                </div>
-
-                <div class="skill-progress-bg">
-                  <div class="skill-progress-fill" style="width: 85%"></div>
-                </div>
-              </li>
-
-              <li class="skills-item">
-                <div class="title-wrapper">
-                  <h5 class="h5">Cloud Services (AWS/GCP/Azure)</h5>
-                  <data value="85">85%</data>
-                </div>
-
-                <div class="skill-progress-bg">
-                  <div class="skill-progress-fill" style="width: 85%"></div>
-                </div>
-              </li>
-
-              <li class="skills-item">
-                <div class="title-wrapper">
-                  <h5 class="h5">Vue.js/Angular</h5>
-                  <data value="80">80%</data>
-                </div>
-
-                <div class="skill-progress-bg">
-                  <div class="skill-progress-fill" style="width: 80%"></div>
-                </div>
-              </li>
-
-              <li class="skills-item">
-                <div class="title-wrapper">
-                  <h5 class="h5">Python</h5>
-                  <data value="75">75%</data>
-                </div>
-
-                <div class="skill-progress-bg">
-                  <div class="skill-progress-fill" style="width: 75%"></div>
-                </div>
-              </li>
-            </ul>
-          </section>
-        </article>
-
-        <!--
-        - #PORTFOLIO
-      -->
-
-        <article class="portfolio" data-page="portfolio">
-          <header>
-            <h2 class="h2 article-title">Portfolio</h2>
-          </header>
-
-          <section class="projects">
-            <ul class="filter-list">
-              <li class="filter-item">
-                <button class="active" data-filter-btn>All</button>
-              </li>
-
-              <li class="filter-item">
-                <button data-filter-btn>Web design</button>
-              </li>
-
-              <li class="filter-item">
-                <button data-filter-btn>Applications</button>
-              </li>
-
-              <li class="filter-item">
-                <button data-filter-btn>Web development</button>
-              </li>
-            </ul>
-
-            <div class="filter-select-box">
-              <button class="filter-select" data-select>
-                <div class="select-value" data-selecct-value>
-                  Select category
-                </div>
-
-                <div class="select-icon">
-                  <ion-icon name="chevron-down"></ion-icon>
-                </div>
-              </button>
-
-              <ul class="select-list">
-                <li class="select-item">
-                  <button data-select-item>All</button>
-                </li>
-
-                <li class="select-item">
-                  <button data-select-item>Web design</button>
-                </li>
-
-                <li class="select-item">
-                  <button data-select-item>Applications</button>
-                </li>
-
-                <li class="select-item">
-                  <button data-select-item>Web development</button>
-                </li>
-              </ul>
-            </div>
-
-            <ul class="project-list">
-              <li
-                class="project-item active"
-                data-filter-item
-                data-category="web development"
-              >
-                <a href="#">
-                  <figure class="project-img">
-                    <div class="project-item-icon-box">
-                      <ion-icon name="eye-outline"></ion-icon>
-                    </div>
-
-                    <img
-                      src="./assets/images/project-1.jpg"
-                      alt="E-commerce Platform"
-                      loading="lazy"
-                    />
-                  </figure>
-
-                  <h3 class="project-title">E-commerce Platform</h3>
-
-                  <p class="project-category">Web development</p>
-                </a>
-              </li>
-
-              <li
-                class="project-item active"
-                data-filter-item
-                data-category="web development"
-              >
-                <a href="#">
-                  <figure class="project-img">
-                    <div class="project-item-icon-box">
-                      <ion-icon name="eye-outline"></ion-icon>
-                    </div>
-
-                    <img
-                      src="./assets/images/project-2.png"
-                      alt="Project Management Tool"
-                      loading="lazy"
-                    />
-                  </figure>
-
-                  <h3 class="project-title">Project Management Tool</h3>
-
-                  <p class="project-category">Web development</p>
-                </a>
-              </li>
-
-              <li
-                class="project-item active"
-                data-filter-item
-                data-category="web design"
-              >
-                <a href="#">
-                  <figure class="project-img">
-                    <div class="project-item-icon-box">
-                      <ion-icon name="eye-outline"></ion-icon>
-                    </div>
-
-                    <img
-                      src="./assets/images/project-3.jpg"
-                      alt="Travel Booking Website"
-                      loading="lazy"
-                    />
-                  </figure>
-
-                  <h3 class="project-title">Travel Booking Website</h3>
-
-                  <p class="project-category">Web design</p>
-                </a>
-              </li>
-
-              <li
-                class="project-item active"
-                data-filter-item
-                data-category="applications"
-              >
-                <a href="#">
-                  <figure class="project-img">
-                    <div class="project-item-icon-box">
-                      <ion-icon name="eye-outline"></ion-icon>
-                    </div>
-
-                    <img
-                      src="./assets/images/project-4.png"
-                      alt="Fitness App"
-                      loading="lazy"
-                    />
-                  </figure>
-
-                  <h3 class="project-title">Fitness App</h3>
-
-                  <p class="project-category">Applications</p>
-                </a>
-              </li>
-
-              <li
-                class="project-item active"
-                data-filter-item
-                data-category="web design"
-              >
-                <a href="#">
-                  <figure class="project-img">
-                    <div class="project-item-icon-box">
-                      <ion-icon name="eye-outline"></ion-icon>
-                    </div>
-
-                    <img
-                      src="./assets/images/project-5.png"
-                      alt="Real Estate Portal"
-                      loading="lazy"
-                    />
-                  </figure>
-
-                  <h3 class="project-title">Real Estate Portal</h3>
-
-                  <p class="project-category">Web design</p>
-                </a>
-              </li>
-
-              <li
-                class="project-item active"
-                data-filter-item
-                data-category="web design"
-              >
-                <a href="#">
-                  <figure class="project-img">
-                    <div class="project-item-icon-box">
-                      <ion-icon name="eye-outline"></ion-icon>
-                    </div>
-
-                    <img
-                      src="./assets/images/project-6.png"
-                      alt="Blogging Platform"
-                      loading="lazy"
-                    />
-                  </figure>
-
-                  <h3 class="project-title">Blogging Platform</h3>
-
-                  <p class="project-category">Web design</p>
-                </a>
-              </li>
-
-              <li
-                class="project-item active"
-                data-filter-item
-                data-category="web development"
-              >
-                <a href="#">
-                  <figure class="project-img">
-                    <div class="project-item-icon-box">
-                      <ion-icon name="eye-outline"></ion-icon>
-                    </div>
-
-                    <img
-                      src="./assets/images/project-7.png"
-                      alt="Analytics Dashboard"
-                      loading="lazy"
-                    />
-                  </figure>
-
-                  <h3 class="project-title">Analytics Dashboard</h3>
-
-                  <p class="project-category">Web development</p>
-                </a>
-              </li>
-
-              <li
-                class="project-item active"
-                data-filter-item
-                data-category="applications"
-              >
-                <a href="#">
-                  <figure class="project-img">
-                    <div class="project-item-icon-box">
-                      <ion-icon name="eye-outline"></ion-icon>
-                    </div>
-
-                    <img
-                      src="./assets/images/project-8.jpg"
-                      alt="Task Management App"
-                      loading="lazy"
-                    />
-                  </figure>
-
-                  <h3 class="project-title">Task Management App</h3>
-
-                  <p class="project-category">Applications</p>
-                </a>
-              </li>
-
-              <li
-                class="project-item active"
-                data-filter-item
-                data-category="web development"
-              >
-                <a href="#">
-                  <figure class="project-img">
-                    <div class="project-item-icon-box">
-                      <ion-icon name="eye-outline"></ion-icon>
-                    </div>
-
-                    <img
-                      src="./assets/images/project-9.png"
-                      alt="Social Media Platform"
-                      loading="lazy"
-                    />
-                  </figure>
-
-                  <h3 class="project-title">Social Media Platform</h3>
-
-                  <p class="project-category">Web development</p>
-                </a>
-              </li>
-            </ul>
-          </section>
-        </article>
-
-        <!--
-        - #BLOG
-      -->
-
-        <article class="blog" data-page="blog">
-          <header>
-            <h2 class="h2 article-title">Blog</h2>
-          </header>
-
-          <section class="blog-posts">
-            <ul class="blog-posts-list">
-              <li class="blog-post-item">
-                <a href="#">
-                  <figure class="blog-banner-box">
-                    <img
-                      src="./assets/images/blog-1.jpg"
-                      alt="Modern JavaScript Features in 2025"
-                      loading="lazy"
-                    />
-                  </figure>
-
-                  <div class="blog-content">
-                    <div class="blog-meta">
-                      <p class="blog-category">Development</p>
-
-                      <span class="dot"></span>
-
-                      <time datetime="2025-09-15">Sep 15, 2025</time>
-                    </div>
-
-                    <h3 class="h3 blog-item-title">
-                      Modern JavaScript Features in 2025
-                    </h3>
-
-                    <p class="blog-text">
-                      Exploring the latest ECMAScript features and how they can
-                      improve your development workflow and code quality.
-                    </p>
-                  </div>
-                </a>
-              </li>
-
-              <li class="blog-post-item">
-                <a href="#">
-                  <figure class="blog-banner-box">
-                    <img
-                      src="./assets/images/blog-2.jpg"
-                      alt="React Performance Optimization Techniques"
-                      loading="lazy"
-                    />
-                  </figure>
-
-                  <div class="blog-content">
-                    <div class="blog-meta">
-                      <p class="blog-category">Development</p>
-
-                      <span class="dot"></span>
-
-                      <time datetime="2025-08-22">Aug 22, 2025</time>
-                    </div>
-
-                    <h3 class="h3 blog-item-title">
-                      React Performance Optimization Techniques
-                    </h3>
-
-                    <p class="blog-text">
-                      Practical strategies to improve the performance of your
-                      React applications and provide a better user experience.
-                    </p>
-                  </div>
-                </a>
-              </li>
-
-              <li class="blog-post-item">
-                <a href="#">
-                  <figure class="blog-banner-box">
-                    <img
-                      src="./assets/images/blog-3.jpg"
-                      alt="Building Scalable Node.js Applications"
-                      loading="lazy"
-                    />
-                  </figure>
-
-                  <div class="blog-content">
-                    <div class="blog-meta">
-                      <p class="blog-category">Backend</p>
-
-                      <span class="dot"></span>
-
-                      <time datetime="2025-07-10">Jul 10, 2025</time>
-                    </div>
-
-                    <h3 class="h3 blog-item-title">
-                      Building Scalable Node.js Applications
-                    </h3>
-
-                    <p class="blog-text">
-                      Architecture patterns and best practices for creating
-                      Node.js applications that can handle increased load and
-                      traffic.
-                    </p>
-                  </div>
-                </a>
-              </li>
-
-              <li class="blog-post-item">
-                <a href="#">
-                  <figure class="blog-banner-box">
-                    <img
-                      src="./assets/images/blog-4.jpg"
-                      alt="CSS Grid vs Flexbox"
-                      loading="lazy"
-                    />
-                  </figure>
-
-                  <div class="blog-content">
-                    <div class="blog-meta">
-                      <p class="blog-category">Design</p>
-
-                      <span class="dot"></span>
-
-                      <time datetime="2025-06-05">Jun 5, 2025</time>
-                    </div>
-
-                    <h3 class="h3 blog-item-title">
-                      CSS Grid vs Flexbox: When to Use Which
-                    </h3>
-
-                    <p class="blog-text">
-                      Understanding the differences between CSS Grid and Flexbox
-                      and choosing the right layout method for your projects.
-                    </p>
-                  </div>
-                </a>
-              </li>
-
-              <li class="blog-post-item">
-                <a href="#">
-                  <figure class="blog-banner-box">
-                    <img
-                      src="./assets/images/blog-5.jpg"
-                      alt="API Security Best Practices"
-                      loading="lazy"
-                    />
-                  </figure>
-
-                  <div class="blog-content">
-                    <div class="blog-meta">
-                      <p class="blog-category">Security</p>
-
-                      <span class="dot"></span>
-
-                      <time datetime="2025-05-18">May 18, 2025</time>
-                    </div>
-
-                    <h3 class="h3 blog-item-title">
-                      API Security Best Practices
-                    </h3>
-
-                    <p class="blog-text">
-                      Essential security measures to protect your APIs from
-                      common vulnerabilities and attacks.
-                    </p>
-                  </div>
-                </a>
-              </li>
-
-              <li class="blog-post-item">
-                <a href="#">
-                  <figure class="blog-banner-box">
-                    <img
-                      src="./assets/images/blog-6.jpg"
-                      alt="Progressive Web Apps"
-                      loading="lazy"
-                    />
-                  </figure>
-
-                  <div class="blog-content">
-                    <div class="blog-meta">
-                      <p class="blog-category">Development</p>
-
-                      <span class="dot"></span>
-
-                      <time datetime="2025-04-12">Apr 12, 2025</time>
-                    </div>
-
-                    <h3 class="h3 blog-item-title">
-                      The Rise of Progressive Web Apps
-                    </h3>
-
-                    <p class="blog-text">
-                      How PWAs are changing the mobile experience and why they
-                      might be the future of web development.
-                    </p>
-                  </div>
-                </a>
-              </li>
-            </ul>
-          </section>
-        </article>
-
-        <!--
-        - #CONTACT
-      -->
-
-        <article class="contact" data-page="contact">
-          <header>
-            <h2 class="h2 article-title">Contact</h2>
-          </header>
-
-          <section class="mapbox" data-mapbox>
-            <figure>
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d155399.595337158!2d13.284649505505906!3d52.50697064440405!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47a84e373f035901%3A0x42120465b5e3b70!2sBerlin%2C%20Germany!5e0!3m2!1sen!2s!4v1678895503434!5m2!1sen!2s"
-                width="400"
-                height="300"
-                loading="lazy"
-              ></iframe>
-            </figure>
-          </section>
-
-          <section class="contact-form">
-            <h3 class="h3 form-title">Contact Form</h3>
-
-            <div class="sidebar-info_more">
-              <div class="separator"></div>
-
-              <ul class="contacts-list1">
-                <li class="contact-item1">
-                  <div class="icon-box">
-                    <ion-icon name="mail-outline"></ion-icon>
-                  </div>
-                  <div class="contact-info">
-                    <p class="contact-title">Email</p>
-                    <a href="mailto:afnanthara11@gmail.com" class="contact-link"
-                      >afnanthara11@gmail.com</a
-                    >
-                  </div>
-                </li>
-
-                <li class="contact-item">
-                  <div class="icon-box">
-                    <ion-icon name="phone-portrait-outline"></ion-icon>
-                  </div>
-                  <div class="contact-info">
-                    <p class="contact-title">Phone</p>
-                    <a href="tel:+4915751342553" class="contact-link"
-                      >+49 157 51342553</a
-                    >
-                  </div>
-                </li>
-
-                <li class="contact-item">
-                  <div class="icon-box">
-                    <ion-icon name="calendar-outline"></ion-icon>
-                  </div>
-                  <div class="contact-info">
-                    <p class="contact-title">Birthday</p>
-                    <time datetime="1995-08-15">August 2, 1999</time>
-                  </div>
-                </li>
-
-                <li class="contact-item">
-                  <div class="icon-box">
-                    <ion-icon name="location-outline"></ion-icon>
-                  </div>
-                  <div class="contact-info">
-                    <p class="contact-title">Location</p>
-                    <address>Berlin, Germany</address>
-                  </div>
-                </li>
-              </ul>
-
-              <div class="separator"></div>
-            </div>
-
-            <style>
-              .contacts-list1,
-              .social-list1 {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                gap: 15px; /* spacing between items */
-              }
-
-              .contact-item1,
-              .social-item1 {
-                display: flex;
-                align-items: center;
-                gap: 10px;
-              }
-            </style>
-          </section>
-        </article>
       </div>
-    </main>
+      <ul class="p-1 text-base flex-grow" style="font-family: 'Arial', sans-serif">
+        <li class="flex items-center gap-2 px-4 py-1 hover:bg-[#000080] hover:text-white cursor-pointer">
+          Programs
+        </li>
+        <li class="flex items-center gap-2 px-4 py-1 hover:bg-[#000080] hover:text-white cursor-pointer">
+          Documents
+        </li>
+        <li class="flex items-center gap-2 px-4 py-1 hover:bg-[#000080] hover:text-white cursor-pointer">
+          Settings
+        </li>
+        <li class="border-t-2 border-gray-500 my-1"></li>
+        <li class="px-4 py-1 hover:bg-[#000080] hover:text-white cursor-pointer">
+          Start using Copilot today! (whoops, wrong timeline!)
+        </li>
+        <li class="border-t-2 border-gray-500 my-1"></li>
+        <li class="flex items-center gap-2 px-4 py-1 hover:bg-[#000080] hover:text-white cursor-pointer">
+          Log Off
+        </li>
+        <li class="flex items-center gap-2 px-4 py-1 hover:bg-[#000080] hover:text-white cursor-pointer">
+          Shut Down...
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Desktop icons -->
+  <div id="desktop-icons">
+    <div class="desktop-icon" data-modal-target="My Computer">
+      <img src="https://win98icons.alexmeub.com/icons/png/computer_explorer-4.png" alt="My Computer" class="h-12 w-12 mb-1" onerror="this.style.display='none'" />
+      <span>My Computer</span>
+    </div>
+    <div class="desktop-icon" data-modal-target="Internet">
+      <img src="https://win98icons.alexmeub.com/icons/png/msie2-2.png" alt="Internet" class="h-12 w-12 mb-1" onerror="this.style.display='none'" />
+      <span>Internet</span>
+    </div>
+    <div class="desktop-icon" data-modal-target="Projects">
+      <img src="https://win98icons.alexmeub.com/icons/png/folder_closed-4.png" alt="Projects" class="h-12 w-12 mb-1" onerror="this.style.display='none'" />
+      <span>Projects</span>
+    </div>
+    <div class="desktop-icon" data-modal-target="Resume">
+      <img src="https://win98icons.alexmeub.com/icons/png/notepad_file-2.png" alt="Resume" class="h-12 w-12 mb-1" onerror="this.style.display='none'" />
+      <span>Resume</span>
+    </div>
+  </div>
+
+  <!-- Main center window -->
+  <div id="main-window" class="ui-panel w-full max-w-4xl mb-4 z-10">
+    <div class="title-bar">
+      <span>afnanbaig.exe - Microsoft Internet Explorer</span>
+      <div class="window-controls">
+        <div id="close-button" class="window-control">X</div>
+      </div>
+    </div>
+    <div class="p-4 sm:p-8">
+      <div class="flex flex-col md:flex-row items-center gap-8">
+        <div class="flex flex-col items-center text-center">
+          <img src="https://i.gifer.com/7E4l.gif" alt="Spinning Email Icon" class="w-full h-24 mb-4" onerror="this.style.display='none'" />
+          <h1 class="text-4xl md:text-5xl font-bold mb-2">Welcome!</h1>
+          <p class="text-lg md:w-48 sm:w-full">
+            Full Stack Developer with 5+ years of experience building high-performance web applications.
+          </p>
+        </div>
+        <div class="flex-1 w-full">
+          <div class="ui-panel p-4" style="border-style: inset">
+            <p class="mb-4">
+              Hello and welcome to my Windows 98-themed portfolio. I'm Afnan Baig, a Full-stack
+              developer with expertise in modern JavaScript frameworks, cloud platforms, and database management.
+            </p>
+            <p class="mb-4">
+              I specialize in implementing RESTful APIs, microservices, and CI/CD pipelines to optimize performance and enhance user engagement.<span class="blinking-text-cursor border-r-4 border-black"></span>
+            </p>
+            <p id="desktop-warn" class="mb-4">
+              Yes, the background is tiled on purpose.
+            </p>
+            <div class="flex flex-wrap gap-4 justify-center">
+              <button class="retro-button" data-modal-target="Projects">
+                View My Work
+              </button>
+              <button class="retro-button" data-modal-target="About Me">
+                About Me
+              </button>
+              <button class="retro-button" data-modal-target="Contact">
+                Contact
+              </button>
+              <button class="retro-button" data-modal-target="Resume">
+                Resume
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Taskbar -->
+  <div id="taskbar" class="fixed bottom-0 left-0 right-0 h-10 ui-panel z-30 flex items-center justify-between md:px-2 sm:px-0">
+    <button id="start-button" class="retro-button text-lg font-bold flex items-center" style="padding: 0 10px; height: 32px">
+      <img src="https://win98icons.alexmeub.com/icons/png/windows-0.png" alt="Start" class="h-6 w-6 mr-2" onerror="this.style.display='none'" />
+      Start
+    </button>
+    <div class="h-full border-l-2 border-gray-500 border-r-2 border-white mx-2"></div>
+    <!-- Taskbar icons -->
+    <div class="flex items-center gap-2">
+      <div class="flex items-center gap-2">
+        <div class="taskbar-icon" title="My Computer">
+          <img src="https://win98icons.alexmeub.com/icons/png/computer-3.png" class="h-8 w-8" alt="My Computer Icon" onerror="this.style.display='none'" />
+        </div>
+        <div class="taskbar-icon" title="Internet">
+          <img src="https://win98icons.alexmeub.com/icons/png/briefcase-3.png" class="h-8 w-8" alt="Internet Icon" onerror="this.style.display='none'" />
+        </div>
+        <div class="taskbar-icon" title="Projects">
+          <img src="https://win98icons.alexmeub.com/icons/png/folder_closed-4.png" class="h-8 w-8" alt="Projects Icon" onerror="this.style.display='none'" />
+        </div>
+        <div class="taskbar-icon" title="Resume">
+          <img src="https://win98icons.alexmeub.com/icons/png/notepad_file-2.png" class="h-8 w-8" alt="Resume Icon" onerror="this.style.display='none'" />
+        </div>
+      </div>
+    </div>
+    <!-- Taskbar right -  clock -->
+    <div class="flex-grow"></div>
+    <div id="system-tray" class="ui-panel p-1 flex items-center gap-2" style="border-style: inset">
+      <span id="clock" class="text-sm" style="font-family: 'Arial', sans-serif"></span>
+    </div>
+  </div>
+
+  <!-- Modal windows -->
+  <div id="modal-overlay" class="hidden fixed inset-0 bg-black bg-opacity-50 z-40 flex items-center justify-center p-4">
+    <div id="modal-window" class="ui-panel w-full max-w-lg">
+      <div class="title-bar">
+        <span id="modal-title"></span>
+        <div class="window-controls">
+          <div id="modal-close-button" class="window-control">X</div>
+        </div>
+      </div>
+      <div id="modal-content" class="p-4 sm:p-8 bg-white" style="border: 2px inset #c0c0c0; max-height: 60vh; overflow-y: auto"></div>
+    </div>
+  </div>
+
+  <!-- GIF windows -->
+  <div id="gif-window-overlay" class="hidden fixed inset-0 bg-black bg-opacity-25 z-40 flex items-center justify-center p-4">
+    <div class="ui-panel w-auto">
+      <div class="title-bar">
+        <span>A Wild GIF Appears!</span>
+        <div class="window-controls">
+          <div id="gif-window-close-button" class="window-control">X</div>
+        </div>
+      </div>
+      <div class="p-2 bg-black">
+        <img id="gif-image" src="" alt="Random 90s GIF" class="max-w-xs sm:max-w-sm md:max-w-md max-h-[60vh]" />
+      </div>
+    </div>
+  </div>
+
+  <!-- Blue screen of death -->
+  <div id="bsod" class="hidden fixed inset-0 bg-[#0000AA] text-white p-4 z-50 uppercase text-lg">
+    <div class="w-full max-w-4xl mx-auto">
+      <p class="bg-white text-[#0000AA] inline-block px-2 mb-8">Windows</p>
+      <p class="mb-4">
+        A fatal exception 0E has occurred at 0028:C0011E36 in VXD VMM(01) +
+        00010E36.
+      </p>
+      <p class="mb-4">The current application will be terminated.</p>
+      <ul class="list-inside list-disc mb-4 pl-4">
+        <li>Press any key to terminate the current application.</li>
+        <li>
+          Press CTRL+ALT+DEL again to restart your computer. You will lose any
+          unsaved information in all applications.
+        </li>
+      </ul>
+      <p>
+        Press any key to continue <span class="blinking-bsod-cursor">_</span>
+      </p>
+    </div>
+  </div>
+
+  <!-- Loader -->
+  <div id="loader" class="fixed inset-0 bg-black z-50 flex flex-col items-center justify-center">
+    <div class="w-64 h-4 bg-gray-700 border-2 border-white relative">
+      <div id="loading-bar" class="h-full bg-blue-500" style="width: 0"></div>
+    </div>
+    <p class="text-white text-lg mt-2">Afnan Portfolio is starting up...</p>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const loader = document.getElementById("loader");
+      const loadingBar = document.getElementById("loading-bar");
+      const body = document.querySelector("body");
+      // Add a class to the body to set the cursor to 'wait'
+      body.classList.add("loading");
+      let progress = 0;
+      const interval = setInterval(() => {
+        progress += Math.random() * 10;
+        if (progress > 100) {
+          progress = 100;
+        }
+        loadingBar.style.width = progress + "%";
+        if (progress === 100) {
+          clearInterval(interval);
+          setTimeout(() => {
+            loader.style.display = "none";
+            // Remove the loading class to restore the default cursor
+            body.classList.remove("loading");
+          }, 500);
+        }
+      }, 200);
+    });
+    // --- Start Menu ---
+    const startButton = document.getElementById("start-button");
+    const startMenu = document.getElementById("start-menu");
+    startButton.addEventListener("click", (event) => {
+      // Stop the click from propagating to the document's click listener.
+      event.stopPropagation();
+      // Toggle the 'hidden' class to show or hide the start menu.
+      startMenu.classList.toggle("hidden");
+    });
+    // Modify the existing document click listener to also handle the start menu.
+    document.addEventListener("click", (event) => {
+      // Hide context menu if the click is outside of it.
+      if (!contextMenu.contains(event.target)) {
+        contextMenu.classList.add("hidden");
+      }
+      // Hide start menu if the click is outside of the menu and the start button.
+      if (
+        !startMenu.classList.contains("hidden") &&
+        !startMenu.contains(event.target) &&
+        !startButton.contains(event.target)
+      ) {
+        startMenu.classList.add("hidden");
+      }
+    });
+    // --- Right-Click Context Menu ---
+    // An array of alternative background images.
+    const backgroundImages = [
+      "https://wallpapers.com/images/hd/old-windows-1920-x-1080-background-ngg7bmgpkxrk69lm.jpg",
+      "https://assets.codepen.io/1502334/duke.png",
+      "https://assets.codepen.io/1502334/lara.png",
+      "https://assets.codepen.io/1502334/dreamweaver.png"
+    ];
+    let currentBgIndex = 0;
+    const contextMenu = document.getElementById("context-menu");
+    const toggleBgSizeBtn = document.getElementById("toggle-bg-size-btn");
+    const changeBgBtn = document.getElementById("change-bg-btn");
+    const body = document.body;
+    // Prevent the default browser context menu from appearing.
+    document.addEventListener("contextmenu", (e) => {
+      e.preventDefault();
+      // Position the custom context menu at the cursor's location.
+      contextMenu.style.top = `${e.clientY}px`;
+      contextMenu.style.left = `${e.clientX}px`;
+      contextMenu.classList.remove("hidden");
+    });
+    // Hide the context menu if the user clicks anywhere else on the page.
+    document.addEventListener("click", (e) => {
+      if (!contextMenu.contains(e.target)) {
+        contextMenu.classList.add("hidden");
+      }
+    });
+    // Handle the "Stretch/Tile Background" option.
+    toggleBgSizeBtn.addEventListener("click", () => {
+      body.classList.toggle("bg-cover");
+      // Update the button text to reflect the current state.
+      if (body.classList.contains("bg-cover")) {
+        toggleBgSizeBtn.textContent = "Tile Background";
+      } else {
+        toggleBgSizeBtn.textContent = "Stretch Background";
+      }
+      contextMenu.classList.add("hidden");
+    });
+    // Handle the "Next Background" option.
+    changeBgBtn.addEventListener("click", () => {
+      // Move to the next image in the array, looping back to the start if necessary.
+      currentBgIndex = (currentBgIndex + 1) % backgroundImages.length;
+      // Apply the new background image.
+      body.style.backgroundImage = `url('${backgroundImages[currentBgIndex]}')`;
+      contextMenu.classList.add("hidden");
+    });
+    // --- BSOD Functionality ---
+    const closeButton = document.getElementById("close-button");
+    const bsodScreen = document.getElementById("bsod");
+    closeButton.addEventListener("click", () =>
+      bsodScreen.classList.remove("hidden")
+    );
+    document.addEventListener("keydown", () => {
+      if (!bsodScreen.classList.contains("hidden")) {
+        bsodScreen.classList.add("hidden");
+      }
+    });
+    // --- Reusable Modal Functionality ---
+    const modalOverlay = document.getElementById("modal-overlay");
+    const modalWindow = document.getElementById("modal-window");
+    const modalTitle = document.getElementById("modal-title");
+    const modalContent = document.getElementById("modal-content");
+    const modalCloseButton = document.getElementById("modal-close-button");
+    // Centralized data object for all modal content.
+    const modalData = {
+      "Projects": {
+        title: "Projects.log",
+        content: `<h2 class="text-2xl font-bold mb-4">Project Archive</h2>
+                     <ul class="list-disc pl-5">
+                       <li class="mb-2"><strong>Almaspay.io:</strong> Payment processing platform with secure transaction handling</li>
+                       <li class="mb-2"><strong>Luxedesign.ae:</strong> Luxury interior design company website with portfolio showcase</li>
+                       <li class="mb-2"><strong>Joinvillesuites.com:</strong> Hotel booking system with real-time availability</li>
+                       <li class="mb-2"><strong>Laroussisolution.com:</strong> Business solutions provider with custom web applications</li>
+                       <li class="mb-2"><strong>Allsoppandallsopp.com:</strong> Real estate platform with property listings and management</li>
+                       <li class="mb-2"><strong>Hogar Properties:</strong> Property management system with lead tracking</li>
+                     </ul>
+                     <p class="mt-4"><strong>Technologies used:</strong> React, Next.js, Vue.js, Angular, Node.js, PHP, Python, MongoDB, PostgreSQL, AWS, GCP</p>`
+      },
+      "About Me": {
+        title: "README.md",
+        content: `<h2 class="text-2xl font-bold mb-4">About Afnan Baig</h2>
+                     <p class="mb-4">A results-driven Full Stack Developer with over 5 years of experience in building high-performance, scalable web applications. Expertise in modern JavaScript frameworks (React, Next.js, Vue.js, Angular, Node.js, PHP), cloud platforms (AWS, GCP, Azure), and database management (MongoDB, PostgreSQL, MySQL).</p>
+                     <p class="mb-4">Skilled in implementing RESTful APIs, micro services, and CI/CD pipelines to optimize performance, reduce load times by up to 80%, and enhance user engagement. Proficient in Agile methodologies, clean architecture, and cross-functional collaboration to deliver robust, user-centric solutions.</p>
+                     <p>My philosophy is to build things that are robust, efficient, and human-centered. In an industry chasing fleeting trends and bloated frameworks, I find satisfaction in clean architecture and well-documented code. I'm not just a developer; I'm a craftsman dedicated to building digital experiences that are meaningful, accessible, and built to last.</p>`
+      },
+      Contact: {
+        title: "contact.info",
+        content: `<h2 class="text-2xl font-bold mb-4">Establish Comms</h2>
+                     <p>You can reach me through the following channels:</p>
+                     <ul class="list-disc pl-5 mt-2">
+                       <li><strong>Location:</strong> Ostseestraße, Berlin, Germany</li>
+                       <li><strong>Phone:</strong> +49 157 51342553</li>
+                       <li><strong>Email:</strong> afnanthara11@gmail.com</li>
+                       <li><strong>LinkedIn:</strong> linkedin.com/in/afnan-baig</li>
+                       <li><strong>GitHub:</strong> github.com/afnan111</li>
+                   
+                     </ul>`
+      },
+      "My Computer": {
+        title: "C:/",
+        content: `<h2 class="text-2xl font-bold mb-4">Directory Listing for C:/</h2>
+                     <ul class="list-disc pl-5 mt-2 font-mono">
+                       <li>/SYS/</li>
+                       <li>/DEV/FRONTEND/</li>
+                       <li>/DEV/BACKEND/</li>
+                       <li>/DEV/DATABASES/</li>
+                       <li>/DEV/CLOUD/</li>
+                       <li>/PROJECTS/</li>
+                       <li>RESUME.pdf</li>
+                     </ul>`
+      },
+      Resume: {
+        title: "RESUME.pdf",
+        content: `<h2 class="text-2xl font-bold mb-4">AFNAN BAIG</h2>
+                     <p class="mb-2"><strong>Full Stack Developer | Web Application Developer</strong></p>
+                     <p class="mb-4">Ostseestraße, Berlin, Germany</p>
+                     
+                     <h3 class="text-xl font-bold mb-2 mt-4">TECHNICAL SKILLS</h3>
+                     <ul class="list-disc pl-5 mb-4">
+                       <li><strong>Languages:</strong> JavaScript, TypeScript, PHP, Python, GraphQL</li>
+                       <li><strong>Frontend:</strong> React, Next.js, Vue.js, Angular, React Native, TailwindCSS</li>
+                       <li><strong>Backend:</strong> Node.js, Express, Strapi, REST APIs, Microservices, OOP</li>
+                       <li><strong>Databases:</strong> MongoDB, PostgreSQL, MySQL, Firebase, Cloud Firestore, SQLite</li>
+                       <li><strong>Cloud & DevOps:</strong> AWS, GCP, Azure, Docker, Kubernetes, Jenkins, GitHub Actions, Terraform, Nginx</li>
+                     </ul>
+                     
+                     <h3 class="text-xl font-bold mb-2 mt-4">WORK EXPERIENCE</h3>
+                     <p class="mb-2"><strong>Senior Full Stack Developer</strong> | Jan 2024 - Jun 2025 | Hogar Properties</p>
+                     <ul class="list-disc pl-5 mb-4">
+                       <li>Architected and developed a full-stack lead management system using React and Node.js</li>
+                       <li>Spearheaded migration from PHP legacy system to MERN stack</li>
+                       <li>Delivered 10+ client projects using various technologies</li>
+                     </ul>
+                     
+                     <p class="mb-2"><strong>Senior Full Stack Developer</strong> | July 2023 - Dec 2023 | Allsopp & Allsopp Group</p>
+                     <ul class="list-disc pl-5 mb-4">
+                       <li>Designed and deployed microservices architecture decreasing page load times by 80%</li>
+                       <li>Developed comprehensive admin dashboard with real-time analytics</li>
+                     </ul>
+
+                        <p class="mb-2"><strong>  Full Stack Developer</strong> | March 2023 - July 2024 | HBL Mfb Bank</p>
+                    <ul class="list-disc pl-5 mb-4">
+  <li>Implemented scalable microservices reducing server response time by 70%</li>
+  <li>Built interactive admin dashboard with live performance monitoring</li>
+</ul>
 
 
+                        <p class="mb-2"><strong>Full Stack Developer</strong> | Jan 2020 - Feb 2022 |Webzela Tech</p>
+                    <ul class="list-disc pl-5 mb-4">
+  <li>Engineered microservices infrastructure improving system efficiency and reliability</li>
+  <li>Created dynamic admin dashboard providing actionable insights in real-time</li>
+</ul>
 
-    
-    <!--
-    - custom js link
-  -->
-    <script src="./assets/js/script.js"></script>
-
-    <!--
-    - ionicon link
-  -->
-    <script
-      type="module"
-      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
-    ></script>
-    <script
-      nomodule
-      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
-    ></script>
-  </body>
+                     
+                     <p class="text-sm mt-6">For complete resume details, please contact me directly.</p>`
+      },
+      Internet: {
+        title: "Establishing Connection...",
+        content: ``
+      }
+    };
+    const openInternetExplorer = () => {
+      const data = modalData["Internet"];
+      if (data) {
+        modalTitle.textContent = data.title;
+        modalContent.innerHTML = data.content;
+        // Make the modal look unresponsive
+        modalWindow.classList.add("frozen");
+        modalContent.style.backgroundColor = "white";
+        modalOverlay.classList.remove("hidden");
+        setTimeout(() => {
+          // After 5 seconds, show crash message
+          modalTitle.textContent = "Internet Explorer";
+          modalContent.innerHTML = `<div class="flex items-center flex-col"><div class="flex mb-8"><img src="https://win98icons.alexmeub.com/icons/png/msg_error-0.png" class="h-8 w-8 mr-4"><p>This program has performed an illegal operation and will be shut down.</p></div></div>`;
+          modalWindow.classList.remove("frozen");
+        }, 5000);
+      }
+    };
+    // This function opens the modal and populates it with the correct data.
+    // It's called by multiple event listeners, making the code more reusable (DRY).
+    const openModal = (targetKey) => {
+      if (targetKey === "Internet") {
+        openInternetExplorer();
+        return;
+      }
+      const data = modalData[targetKey];
+      if (data) {
+        modalTitle.textContent = data.title;
+        modalContent.innerHTML = data.content;
+        modalContent.style.backgroundColor = "white";
+        modalOverlay.classList.remove("hidden");
+      }
+    };
+    // Select ALL elements that should trigger a modal and loop through them.
+    // This includes the main CTA buttons and the new desktop icons.
+    const modalTriggers = document.querySelectorAll("[data-modal-target]");
+    modalTriggers.forEach((trigger) => {
+      trigger.addEventListener("click", () => {
+        const targetKey = trigger.dataset.modalTarget;
+        openModal(targetKey);
+      });
+    });
+    const closeModal = () => modalOverlay.classList.add("hidden");
+    modalCloseButton.addEventListener("click", closeModal);
+    modalOverlay.addEventListener("click", (event) => {
+      if (event.target === modalOverlay) closeModal();
+    });
+    // --- GIF Window Functionality ---
+    const gifUrls = [
+      "https://i.gifer.com/EfEa.gif",
+      "https://i.gifer.com/6VDN.gif",
+ 
+      "https://i.gifer.com/KbSB.gif",
+      "https://i.gifer.com/K1J7.gif",
+      "https://i.gifer.com/1Xs.gif",
+      "https://i.gifer.com/2Nli.gif",
+      "https://i.gifer.com/3Fjh.gif",
+     
+    ];
+    const gifTriggerIcons = document.querySelectorAll(".taskbar-icon");
+    const gifWindowOverlay = document.getElementById("gif-window-overlay");
+    const gifImage = document.getElementById("gif-image");
+    const gifWindowCloseButton = document.getElementById("gif-window-close-button");
+    const openGifWindow = () => {
+      const randomIndex = Math.floor(Math.random() * gifUrls.length);
+      gifImage.src = gifUrls[randomIndex];
+      gifWindowOverlay.classList.remove("hidden");
+    };
+    const closeGifWindow = () => {
+      gifWindowOverlay.classList.add("hidden");
+      gifImage.src = ""; // Clear src to stop the animation
+    };
+    gifTriggerIcons.forEach((icon) =>
+      icon.addEventListener("click", openGifWindow)
+    );
+    gifWindowCloseButton.addEventListener("click", closeGifWindow);
+    gifWindowOverlay.addEventListener("click", (event) => {
+      if (event.target === gifWindowOverlay) closeGifWindow();
+    });
+    // --- Clock Functionality ---
+    const clockElement = document.getElementById("clock");
+    const updateClock = () => {
+      const now = new Date();
+      let hours = now.getHours();
+      const minutes = now.getMinutes().toString().padStart(2, "0");
+      const ampm = hours >= 12 ? "PM" : "AM";
+      hours = hours % 12;
+      hours = hours ? hours : 12;
+      clockElement.textContent = `${hours}:${minutes} ${ampm}`;
+    };
+    updateClock();
+    setInterval(updateClock, 1000);
+  </script>
+</body>
 </html>
